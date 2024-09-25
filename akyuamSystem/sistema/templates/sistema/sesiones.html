@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Sesiones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            padding: 20px;
+        }
+        .left-panel {
+            width: 30%;
+            background-color: white;
+            padding: 20px;
+            border-right: 1px solid #ccc;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .user-list {
+            list-style: none;
+            padding: 0;
+        }
+        .user-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .user-list li img {
+            margin-right: 10px;
+        }
+        .user-list li input {
+            margin-left: auto;
+        }
+        .right-panel {
+            width: 70%;
+            padding: 20px;
+            background-color: white;
+        }
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .session-header h2 {
+            margin: 0;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn-save {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Panel Izquierdo -->
+        <div class="left-panel">
+            <div class="search-container">
+                <input type="text" placeholder="Nombre">
+                <input type="text" placeholder="No. Expediente">
+            </div>
+            <ul class="user-list">
+                <li>
+                    <img src="user-icon.png" alt="user" width="30">
+                    <span>Participante 1</span>
+                    <input type="checkbox" checked>
+                </li>
+                <li>
+                    <img src="user-icon.png" alt="user" width="30">
+                    <span>Participante 2</span>
+                    <input type="checkbox">
+                </li>
+                <li>
+                    <img src="user-icon.png" alt="user" width="30">
+                    <span>Participante 3</span>
+                    <input type="checkbox">
+                </li>
+            </ul>
+        </div>
+
+        <!-- Panel Derecho -->
+        <div class="right-panel">
+            <div class="session-header">
+                <h2>Registro de Sesión</h2>
+              
+            </div>
+
+            <div class="form-group">
+                <label for="actividad">Actividad:</label>
+                <textarea id="actividad" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="resultados">Resultados:</label>
+                <textarea id="resultados" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="recomendaciones">Recomendaciones:</label>
+                <textarea id="recomendaciones" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="area">Área de intervención:</label>
+                <select id="area">
+                    <option value="">Seleccione un área</option>
+                    <option value="area1">Área 1</option>
+                    <option value="area2">Área 2</option>
+                    <option value="area3">Área 3</option>
+                </select>
+            </div>
+
+            <button class="btn-save">Guardar</button>
+        </div>
+    </div>
+
+</body>
+</html>
