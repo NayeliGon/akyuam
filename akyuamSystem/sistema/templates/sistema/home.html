@@ -72,33 +72,33 @@
     <div class="container">
         <h1>Menú</h1>
         <div class="menu-grid">
-            <div class="menu-item">
+            <a href="{% url 'registrar_participante' %}" class="menu-item">
                 <span>👤</span> 
                 <p>Registrar participante</p>
-            </div>
-            <div class="menu-item">
+            </a>
+            <a href="{% url 'sesiones' %}" class="menu-item">
                 <span>📝</span> 
                 <p>Registrar asistencia</p>
-            </div>
-            <div class="menu-item">
+            </a>
+            <a href="{% url 'consulta_asistencia' %}" class="menu-item">
                 <span>🔍</span> 
                 <p>Consulta de asistencia</p>
-            </div>
-            <div class="menu-item">
+            </a>
+            <a href="{% url 'calcular_gastos' %}" class="menu-item">
                 <span>🍽️</span> 
                 <p>Calcular gastos de alimentación</p>
-            </div>
-            <div class="menu-item">
+            </a>
+            <a href="{% url 'administrar_usuarios' %}" class="menu-item">
                 <span>⚙️</span> 
                 <p>Administrar usuarios</p>
-            </div>
-            <div class="menu-item">
+            </a>
+            <a href="{% url 'emergencias' %}" class="menu-item">
                 <span>🚨</span> 
                 <p>Emergencias</p>
-            </div>
+            </a>
         </div>
         <div class="logout">
-            <span>⏩</span> 
+            <a href="{% url 'logout' %}"><span>⏩</span></a>
         </div>
     </div>
 </body>
