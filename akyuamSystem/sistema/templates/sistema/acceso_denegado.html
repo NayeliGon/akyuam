@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Denegado</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        .error-container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 400px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        .error-container:hover {
+            box-shadow: 0px 12px 35px rgba(0, 0, 0, 0.15);
+        }
+        .error-container .icon {
+            font-size: 80px;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+        .error-container h1 {
+            font-size: 24px;
+            color: #444;
+            margin-bottom: 10px;
+        }
+        .error-container p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .error-container a {
+            display: inline-block;
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #e74c3c;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .error-container a:hover {
+            background-color: #c0392b;
+            box-shadow: 0px 4px 8px rgba(231, 76, 60, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <i class="fas fa-ban icon"></i>
+        <h1>Acceso Denegado</h1>
+        <p>No tienes permisos para acceder a esta vista.</p>
+        <a href="{% url 'home' %}">Volver a la Página Principal</a>
+    </div>
+</body>
+</html>

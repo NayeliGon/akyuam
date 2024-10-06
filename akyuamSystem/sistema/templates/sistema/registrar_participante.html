@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Participante</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Entrevista a Usuaria</h2>
+        <form>
+            <!-- Sección: Datos de la Usuaria -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    Datos de la Usuaria
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Nombre completo">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="apellidos" class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" id="apellidos" placeholder="Apellidos">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" id="fecha_nacimiento">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="telefono" placeholder="Número de teléfono">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="municipio" class="form-label">Municipio</label>
+                            <select class="form-select" id="municipio">
+                                <option selected>Selecciona un municipio</option>
+                                <!-- Opciones de municipios -->
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="departamento" class="form-label">Departamento</label>
+                            <select class="form-select" id="departamento">
+                                <option selected>Selecciona un departamento</option>
+                                <!-- Opciones de departamentos -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: Datos Familiares -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    Datos Familiares
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="hijo_nombre" class="form-label">Nombre del Niño</label>
+                            <input type="text" class="form-control" id="hijo_nombre" placeholder="Nombre del niño">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="hijo_edad" class="form-label">Edad</label>
+                            <input type="number" class="form-control" id="hijo_edad" placeholder="Edad del niño">
+                        </div>
+                    </div>
+                    <!-- Agregar más hijos si es necesario -->
+                </div>
+            </div>
+
+            <!-- Sección: Descripción del Hecho -->
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">
+                    Descripción del Hecho
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="descripcion_hecho" class="form-label">Descripción del Hecho</label>
+                        <textarea class="form-control" id="descripcion_hecho" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón de Enviar -->
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
