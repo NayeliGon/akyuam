@@ -11,4 +11,5 @@ urlpatterns = [
     path('calcular-gastos/', views.calcular_gastos_view, name='calcular_gastos'),  
     path('administrar-usuarios/', views.administrar_usuarios_view, name='administrar_usuarios'),  
     path('logout/', views.logout_view, name='logout'),  
+    path('boton-emergencia/', views.boton_emergencia_view, name='boton'), 
 ]

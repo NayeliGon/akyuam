@@ -46,6 +46,10 @@ def emergencias_view(request):
     return render(request, 'sistema/emergencias.html')
 
 
+def boton_emergencia_view(request):
+    return render(request, 'sistema/boton_emergencia.html')
+
+
 def logout_view(request):
     
     return redirect('login')
