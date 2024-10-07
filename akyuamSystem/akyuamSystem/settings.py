@@ -130,3 +130,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home'  # Redirige a la página principal después de iniciar sesión
 LOGOUT_REDIRECT_URL = 'login'  # Redirige a la página de login después de cerrar sesión
+LOGIN_URL = '/login/'
+
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]

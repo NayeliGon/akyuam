@@ -20,29 +20,29 @@
             background-color: white;
             box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            height: 500px; /* Ajusta la altura total aquí */
+            height: 500px; 
         }
         .login-left {
             background-image: url('https://img.freepik.com/vector-gratis/simbolo-femenino-morado-fondo-morado_71767-108.jpg'); /* Ruta de la imagen de fondo */
-            background-size: cover; /* Hace que la imagen cubra todo el contenedor */
-            background-position: center; /* Centra la imagen */
-            background-repeat: no-repeat; /* Evita que la imagen se repita */
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
             color: white;
             padding: 40px;
             border-radius: 10px 0 0 10px;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Centra verticalmente el contenido */
-            align-items: center; /* Centra horizontalmente el contenido */
+            justify-content: center; 
+            align-items: center; 
             text-align: center;
-            width: 40%; /* Tamaño de la parte izquierda */
+            width: 40%; 
         }
         .login-right {
             padding: 40px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Asegura que esté centrado verticalmente */
+            justify-content: center; 
         }
         .form-control {
             margin-bottom: 20px;
@@ -59,15 +59,31 @@
         .btn-custom:hover {
             background-color: #5a4d82; 
         }
+        .alert-danger {
+            margin-top: 20px;
+        }
+        
+     
+        
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="login-left">
-           
         </div>
         <div class="login-right">
             <h2>Iniciar Sesión</h2>
+
+            {% if messages %}
+                <div class="alert alert-danger">
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
             <form method="post">
                 {% csrf_token %}
                 <div class="mb-3">
@@ -81,7 +97,10 @@
                 <button type="submit" class="btn btn-custom w-100">Iniciar sesión</button>
             </form>
         </div>
+    
+        
     </div>
+   
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
