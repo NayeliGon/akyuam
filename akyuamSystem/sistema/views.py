@@ -113,6 +113,10 @@ def emergencias_view(request):
     else:
         return render(request, 'sistema/acceso_denegado.html', status=403)
 
+def boton_emergencia_view(request):
+    return render(request, 'sistema/boton_emergencia.html')
+
+
 def logout_view(request):
 
     if 'datos' in request.session:

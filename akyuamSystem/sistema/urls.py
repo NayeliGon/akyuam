@@ -12,5 +12,5 @@ urlpatterns = [
     path('calcular-gastos/', login_required(views.calcular_gastos_view), name='calcular_gastos'),  
     path('administrar-usuarios/', login_required(views.administrar_usuarios_view), name='administrar_usuarios'),  
     path('logout/', views.logout_view, name='logout'),  
-   # path('registro/', login_required(views.registrar_municipio), name='registro'),
+    path('boton-emergencia/', views.boton_emergencia_view, name='boton'), 
 ]
