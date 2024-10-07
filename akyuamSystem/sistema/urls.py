@@ -12,9 +12,5 @@ urlpatterns = [
     path('calcular-gastos/', login_required(views.calcular_gastos_view), name='calcular_gastos'),  
     path('administrar-usuarios/', login_required(views.administrar_usuarios_view), name='administrar_usuarios'),  
     path('logout/', views.logout_view, name='logout'),  
-<<<<<<< HEAD
     path('boton-emergencia/', views.boton_emergencia_view, name='boton'), 
-=======
-   # path('registro/', login_required(views.registrar_municipio), name='registro'),
->>>>>>> f8201d202ec60ecff1343115f66eb2c3ab3a6b06
 ]
