@@ -5,10 +5,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponse
 from django.shortcuts import render
 from django.db.models import Q
 from django.contrib.auth import logout
+from . import notificacion_boton
+
 
 
 def login_view(request):
@@ -126,3 +128,14 @@ def logout_view(request):
     request.session.flush()
 
     return redirect('login')
+
+
+#Vista para manejar el envío de datos del boton de emergencia
+
+def envio_boton_view(request):
+    if request.method == 'POST':
+    
+        notificacion_boton.enviar_mensaje()  # Funcion para enviar mensajes
+        return HttpResponse('Mensaje enviado')
+    else:
+        return HttpResponse('Solicitud inválida', status=400)

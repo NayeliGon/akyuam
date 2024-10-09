@@ -41,8 +41,10 @@
   <div id="contenedor_boton">  
    
     <h1>Botón de emergencia</h1>
-    
-<button class="button">
+ 
+<!--<form method="POST" action="{% url 'notificacion_emergencia' %}"> -->
+ <!-- {% csrf_token %} -->
+<button class="button" id="boton">
   <div class="lid">
     <span class="side top"></span>
     <span class="side front"></span>
@@ -61,11 +63,29 @@
     </div>
   </div>
 </button>
+ <!--</form> -->
 
 <p>Presione este botón si se encuentra en una situación de violencia intrafamiliar</p>
 
 </div>
 
+<script>
+
+  //Enviar notificacion de emergencia por medio del boton
+
+document.getElementById('boton').addEventListener('click', function() {
+    fetch("{% url 'notificacion_emergencia' %}", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}"  // Incluye el token CSRF
+        }
+    })
+    .then(response => response.text())
+    .then(data => alert(data))
+    .catch(error => console.error('Error:', error));
+});
+
+</script>
 
 <script src="{% static 'js/boton.js' %}"></script>
 </body>

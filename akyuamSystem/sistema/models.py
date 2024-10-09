@@ -33,14 +33,14 @@ class Participante(models.Model):
     fecha_nacimiento = models.DateField()
     telefono = models.CharField(max_length=20)
     municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE)
-    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
+    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE) #No esta en la ficha
     direccion = models.CharField(max_length=255)
-    estadocivil = models.ForeignKey(EstadoCivil, on_delete=models.CASCADE)
+    estadocivil = models.ForeignKey(EstadoCivil, on_delete=models.CASCADE) #relacion afinidad
     telefono_trabajo = models.CharField(max_length=20, null=True, blank=True)
     direccion_trabajo = models.CharField(max_length=255, null=True, blank=True)
     profesion_ocupacion = models.CharField(max_length=100)
-    albergue = models.BooleanField(default=False)
-    enfermedad = models.BooleanField(default=False)
+    albergue = models.BooleanField(default=False) #No va ahí
+    enfermedad = models.BooleanField(default=False) #Falta la descripcion de la enfermedad
     vivienda = models.BooleanField(default=False)
     dependencias = models.BooleanField(default=False)
     gestacion = models.BooleanField(default=False)
