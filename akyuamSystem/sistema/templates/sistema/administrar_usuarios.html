@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Usuario</title>
+    <title>Administrar Usuarios</title>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -15,19 +15,23 @@
             margin: 0;
         }
 
-        .form-container {
+        .container {
+            width: 80%;
             background-color: white;
             border-radius: 12px;
-            padding: 40px;
+            padding: 20px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
         }
 
         h2 {
             text-align: center;
             color: #333;
             margin-bottom: 30px;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         .input-group {
@@ -53,15 +57,6 @@
             font-size: 16px;
         }
 
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="password"]:focus,
-        select:focus {
-            border-color: #5a4d82;
-            outline: none;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
-        }
-
         .submit-btn {
             width: 100%;
             padding: 12px;
@@ -71,62 +66,124 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
-            margin-top: 20px;
         }
 
         .submit-btn:hover {
             background-color: #5a4d82;
         }
+
+        /* Estilos para la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        td a {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <form id="registro-form" method="POST">
-            {% csrf_token %}
-            <h2>Registro de Usuario</h2>
+    <div class="container">
+        <h2>Administrar Usuarios</h2>
 
-            <div class="input-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="nombre" required>
-            </div>
+        <div class="form-container">
+            <form id="registro-form" method="POST">
+                {% csrf_token %}
+                <h2>Registrar Usuario</h2>
 
-            <div class="input-group">
-                <label for="apellido">Apellido</label>
-                <input type="text" id="apellido" name="apellido" required>
-            </div>
+                <div class="input-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
 
-            <div class="input-group">
-                <label for="correo">Correo Electrónico</label>
-                <input type="email" id="correo" name="correo" required>
-            </div>
+                <div class="input-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" id="apellido" name="apellido" required>
+                </div>
 
-            <div class="input-group">
-                <label for="contraseña">Contraseña</label>
-                <input type="password" id="contraseña" name="contraseña" required>
-            </div>
+                <div class="input-group">
+                    <label for="correo">Correo Electrónico</label>
+                    <input type="email" id="correo" name="correo" required>
+                </div>
 
-            <div class="input-group">
-                <label for="nivel-usuario">Nivel de Usuario</label>
-                <select id="nivel-usuario" name="nivel-usuario" required>
-                    <option value="" disabled selected>Seleccione un nivel de usuario</option>
-                    <option value="1">Administrador</option>
-                    <option value="2">Recepcion</option>
-                    <option value="3">Encargado</option>
-                </select>
-            </div>
+                <div class="input-group">
+                    <label for="contraseña">Contraseña</label>
+                    <input type="password" id="contraseña" name="contraseña" required>
+                </div>
 
-            <button type="submit" class="submit-btn">Registrarse</button>
+                <div class="input-group">
+                    <label for="nivel-usuario">Nivel de Usuario</label>
+                    <select id="nivel-usuario" name="nivel-usuario" required>
+                        <option value="" disabled selected>Seleccione un nivel de usuario</option>
+                        <option value="1">Administrador</option>
+                        <option value="2">Recepcion</option>
+                        <option value="3">Encargado</option>
+                    </select>
+                </div>
 
-           
+                <button type="submit" class="submit-btn">Registrarse</button>
+            </form>
+        </div>
 
-        </form>
+        <!-- Mensajes de éxito o error -->
         {% if messages %}
         <ul>
             {% for message in messages %}
                 <li>{{ message }}</li>
             {% endfor %}
         </ul>
-    {% endif %}
+        {% endif %}
+
+        <!-- Tabla de usuarios -->
+        <h2>Lista de Usuarios</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Nivel</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in usuarios %}
+                <tr>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% if user.groups.all %}
+                            {% for group in user.groups.all %}
+                                {{ group.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            Sin grupo
+                        {% endif %}
+                    </td>
+                    
+                    <td>
+                        <a href="{% url 'restablecer_contrasena' user.id %}">Restablecer Contraseña</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
