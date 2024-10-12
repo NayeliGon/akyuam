@@ -29,8 +29,8 @@
 
       <h3>Ingrese su código</h3>
 
-      <input type="text" id="txt_codigo" placeholder="Código Ak'Yu'Am">
-      <button id="btn_verificar">Verificar</button>
+      <input type="number" min="0" step="1" id="txt_codigo" placeholder="Código Ak'Yu'Am">
+      <button id="btn_verificar">Guardar</button>
 
     </div>
 
@@ -74,11 +74,18 @@
   //Enviar notificacion de emergencia por medio del boton
 
 document.getElementById('boton').addEventListener('click', function() {
+
+   // Capturamos el valor del cuadro de texto
+   const codigo = document.getElementById('txt_codigo').value;
+
     fetch("{% url 'notificacion_emergencia' %}", {
         method: "POST",
         headers: {
             "X-CSRFToken": "{{ csrf_token }}"  // Incluye el token CSRF
-        }
+        },
+        body: JSON.stringify({
+            "codigo": codigo  // Aquí enviamos el valor del input
+        })
     })
     .then(response => response.text())
     .then(data => alert(data))

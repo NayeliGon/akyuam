@@ -19,7 +19,7 @@ iconoMenu.addEventListener('click', (e)=>{
 const btn_verificar = document.getElementById("btn_verificar").addEventListener("click", (e)=>{
 
     guardarCodigo();
-    alert("Código verificado");
+    alert("Código guardado");
     
 
 });
