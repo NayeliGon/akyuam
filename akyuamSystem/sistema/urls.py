@@ -13,5 +13,7 @@ urlpatterns = [
     path('administrar-usuarios/', login_required(views.administrar_usuarios_view), name='administrar_usuarios'),  
     path('logout/', views.logout_view, name='logout'),  
     path('boton-emergencia/', views.boton_emergencia_view, name='boton'), 
+    path('enviar-notificacion/', views.envio_boton_view, name='notificacion_emergencia'),
+
     path('restablecer-contrasena/<int:user_id>/', views.restablecer_contrasena_view, name='restablecer_contrasena'),
 ]

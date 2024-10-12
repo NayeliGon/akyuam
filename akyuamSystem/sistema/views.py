@@ -20,7 +20,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponse
 from django.shortcuts import render
 from django.db.models import Q
 from django.contrib.auth import logout
@@ -41,7 +41,10 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-
+from . import notificacion_boton
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 @login_required
 def registrar_participante_view(request):
@@ -233,3 +236,36 @@ def logout_view(request):
     request.session.flush()
 
     return redirect('login')
+
+
+#Vista para manejar el envío de datos del boton de emergencia
+
+def envio_boton_view(request):
+    if request.method == 'POST':
+
+        #obtener codigo
+        data = json.loads(request.body)
+        codigo= data.get('codigo')
+
+        #consultar existencia de código en la base de datos
+
+        try:
+
+            participante = Participante.objects.get(id=codigo)
+            nombre = participante.nombre
+            apellido= participante.apellido
+            direccion = participante.direccion
+
+    
+            print('Datos obtenidos',nombre,apellido, direccion)
+            notificacion_boton.enviar_mensaje(nombre,apellido,direccion)  # Funcion para enviar mensajes
+            return HttpResponse('Mensaje enviado')
+
+
+        except Participante.DoesNotExist:
+            print("No es participante de akyuam")
+            return HttpResponse('El código no es válido')
+    
+       
+    else:
+        return HttpResponse('Solicitud inválida', status=400)
