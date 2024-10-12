@@ -3,6 +3,14 @@ from django.db import models
 
 
 
+class Idioma(models.Model):
+    id_idioma = models.AutoField(primary_key=True)
+    idioma = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.idioma
+
+
 class Bienes(models.Model):
     id_bien = models.AutoField(primary_key=True)
     bien = models.CharField(max_length=50)
@@ -46,12 +54,7 @@ class EstadoVivienda(models.Model):
     def __str__(self):
         return self.estado_vivienda
 
-class Idioma(models.Model):
-    id_idioma = models.AutoField(primary_key=True)
-    idioma = models.CharField(max_length=50)
 
-    def __str__(self):
-        return self.idioma
 
 class Religion(models.Model):
     id_religion = models.AutoField(primary_key=True)
@@ -105,41 +108,43 @@ class TipoViolencia(models.Model):
         return self.tipo_violencia
 
 class Participante(models.Model):
+    id = models.AutoField(primary_key=True)
     no_expediente = models.CharField(max_length=50)
-    referente = models.CharField(max_length=100)
-    hora_ingreso = models.TimeField()
+    referente = models.CharField(max_length=100, null=True, blank=True)  # Opcional
+    hora_ingreso = models.TimeField(null=True, blank=True)  # Opcional
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     telefono = models.CharField(max_length=15)
     dpi = models.CharField(max_length=20)
+    fecha_nacimiento = models.DateField(null=True, blank=True)  # Opcional
+    direccion = models.CharField(max_length=100, null=True, blank=True)  # Opcional
+    lectura_escritura = models.BooleanField(default=False)  # Valor por defecto
+    profesion = models.CharField(max_length=100, null=True, blank=True)  # Opcional
+    ocupacion = models.CharField(max_length=100, null=True, blank=True)  # Opcional
+    direccion_trabajo = models.CharField(max_length=100, null=True, blank=True)  # Opcional
+    telefono_trabajo = models.CharField(max_length=15, null=True, blank=True)  # Opcional
+    antecedentes_enfermedad = models.BooleanField(default=False)  # Valor por defecto
+    enfermedad = models.CharField(max_length=100, null=True, blank=True)  # Opcional
+    presenta_discapacidad = models.BooleanField(default=False)  # Valor por defecto
+    discapacidad = models.CharField(max_length=100, null=True, blank=True)  # Opcional
+    estado_gestacion = models.BooleanField(default=False)  # Valor por defecto
+    tiempo_gestacion = models.CharField(max_length=15, null=True, blank=True)  # Opcional
+    dependencia_adictiva = models.BooleanField(default=False)  # Valor por defecto
+    dependencia = models.ForeignKey(DependenciaAdictiva, on_delete=models.CASCADE, null=True, blank=True)  # Opcional
+    apoyo_familiar = models.BooleanField(default=False)  # Valor por defecto, opcional
+    escolaridad = models.ForeignKey(Escolaridad, on_delete=models.CASCADE)
+    estado_civil = models.ForeignKey(EstadoCivil, on_delete=models.CASCADE)
+    estado_vivienda = models.ForeignKey(EstadoVivienda, on_delete=models.CASCADE)
     etnia = models.ForeignKey(Etnia, on_delete=models.CASCADE)
     municipio_nacimiento = models.ForeignKey(Municipio, related_name='nacimiento', on_delete=models.CASCADE)
-    fecha_nacimiento = models.DateField()
-    estado_civil = models.ForeignKey(EstadoCivil, on_delete=models.CASCADE)
     relacion_afinidad = models.ForeignKey(RelacionAfinidad, on_delete=models.CASCADE)
-    direccion = models.CharField(max_length=100)
     municipio_direccion = models.ForeignKey(Municipio, related_name='direccion', on_delete=models.CASCADE)
-    estado_vivienda = models.ForeignKey(EstadoVivienda, on_delete=models.CASCADE)
     idioma = models.ForeignKey(Idioma, on_delete=models.CASCADE)
-    religion = models.ForeignKey(Religion, on_delete=models.CASCADE)
-    lectura_escritura = models.BooleanField()
-    escolaridad = models.ForeignKey(Escolaridad, on_delete=models.CASCADE)
-    profesion = models.CharField(max_length=100)
-    ocupacion = models.CharField(max_length=100)
-    direccion_trabajo = models.CharField(max_length=100)
-    telefono_trabajo = models.CharField(max_length=15)
-    antecedentes_enfermedad = models.BooleanField()
-    enfermedad = models.CharField(max_length=100)
-    presenta_discapacidad = models.BooleanField()
-    discapacidad = models.CharField(max_length=100)
-    estado_gestacion = models.BooleanField()
-    tiempo_gestacion = models.CharField(max_length=15)
-    dependencia_adictiva = models.BooleanField()
-    dependencia = models.ForeignKey(DependenciaAdictiva, on_delete=models.CASCADE)
-    apoyo_familiar = models.BooleanField()
+    religion = models.ForeignKey(Religion, on_delete=models.CASCADE) 
 
     def __str__(self):
-        return f"{self.nombre} {self.apellido}"
+        return f"{self.nombre} {self.apellido} {self.no_expediente}"
+
 
 class Hijo(models.Model):
     nombre = models.CharField(max_length=50)
@@ -167,7 +172,7 @@ class ReferenciaFamiliar(models.Model):
 
 class Hecho(models.Model):
     tiempo_violencia = models.CharField(max_length=50)
-    tipo_violencia = models.ForeignKey(TipoAntecedente, on_delete=models.CASCADE)
+    tipo_violencia = models.ForeignKey(TipoViolencia, on_delete=models.CASCADE)
     fecha = models.DateField()
     hora = models.TimeField()
     municipio_acontecimiento = models.ForeignKey(Municipio, on_delete=models.CASCADE)
@@ -217,33 +222,4 @@ class Agresor(models.Model):
 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
-
-
-'''
-class MyUserManager(BaseUserManager):
-    def create_user(self, email, password=None):
-        if not email:
-            raise ValueError('El usuario debe tener un correo electrónico')
-        user = self.model(email=self.normalize_email(email))
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email, password):
-        user = self.create_user(email, password)
-        user.is_admin = True
-        user.save(using=self._db)
-        return user
-
-class MyUser(AbstractBaseUser):
-    email = models.EmailField(verbose_name="Correo", max_length=255, unique=True)
-    is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
-
-    objects = MyUserManager()
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-'''
-
 

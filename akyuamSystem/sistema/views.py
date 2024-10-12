@@ -1,27 +1,12 @@
 from django.shortcuts import render, redirect
-from .models import TipoViolencia
-from .models import Departamento
-from .models import Municipio
-from .models import Escolaridad
-from .models import EstadoCivil
-from .models import EstadoVivienda
-from .models import Etnia
-from .models import Idioma
-from .models import RelacionAfinidad
-from .models import Religion
-from .models import Bienes
-from .models import TipoAntecedente
-from .models import Participante
-from .models import Hijo
-from .models import Hecho
-from .models import ReferenciaFamiliar
-from .models import Agresor
+from .models import TipoViolencia, Departamento, Municipio,Escolaridad,EstadoCivil,EstadoVivienda,Etnia,Idioma,RelacionAfinidad
+from .models import Religion, Bienes,TipoAntecedente,Participante,Hijo,Hecho,ReferenciaFamiliar,Agresor
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseForbidden
-from django.shortcuts import render
+
 from django.db.models import Q
 from django.contrib.auth import logout
 from django.contrib.auth.models import User, Group
@@ -36,38 +21,103 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.core.mail import send_mail
-from django.shortcuts import render, redirect
-from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import ParticipanteForm  
+from datetime import datetime
+from django.http import HttpResponse
 from django.contrib import messages
+from .models import Idioma
+from .forms import IdiomaForm
+from django.shortcuts import render, get_object_or_404, redirect
+from .forms import HijoForm
+from .models import Participante
+from .forms import ReferenciaFamiliarForm
+from .forms import HechoForm
+from .forms import AgresorForm
 
 
 @login_required
-def registrar_participante_view(request):
-    grupos_permitidos = ['Administrador', 'Recepcion']
-    if request.user.groups.filter(name__in=grupos_permitidos).exists():
-        if request.method == 'POST':
-            form = ParticipanteForm(request.POST)
-            if form.is_valid():
-                
-                participante = form.save(commit=False)
-                participante.no_expediente = generar_numero_expediente()
-                participante.save()
-                return redirect('lista_participantes')  
-        else:
-            form = ParticipanteForm()
-           
-            form.fields['no_expediente'].initial = generar_numero_expediente()
-
-        return render(request, 'sistema/registrar_participante.html', {'form': form})
+def registrar_idioma(request):
+    if request.method == 'POST':
+        form = IdiomaForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            return redirect('sistema/registrar_idioma.html')  
     else:
-        return render(request, 'sistema/acceso_denegado.html', status=403)
+        form = IdiomaForm()  
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'sistema/registrar_idioma.html', context)
+
+@login_required
+def registrar_participante(request):
+    if request.method == 'POST':
+        form = ParticipanteForm(request.POST)
+        if form.is_valid():
+            participante = form.save()
+            print(f"ID del participante creado: {participante.id}")  
+            return redirect('registrar_hijo', participante_id=participante.id)
+    else:
+        form = ParticipanteForm()
+    return render(request, 'sistema/registrar_participante.html', {'form': form})
+
+@login_required
+def registrar_hijo(request, participante_id):
+    participante = get_object_or_404(Participante, id=participante_id)
+    
+    if request.method == 'POST':
+        form = HijoForm(request.POST)
+        if form.is_valid():
+            hijo = form.save(commit=False)
+            hijo.participante_madre = participante
+            hijo.save()
+            print(f"ID del participante creado: {participante.id}") 
+            return redirect('referencia_familiar', participante_id=participante.id)
+
+    else:
+        form = HijoForm()
+    
+    return render(request, 'sistema/registrar_hijo.html', {'form': form, 'participante': participante})
 
 
+@login_required
+def referenciaFamiliar(request, participante_id):
+    participante = get_object_or_404(Participante, id=participante_id)
+    
+    if request.method == 'POST':
+        form = ReferenciaFamiliarForm(request.POST)
+        if form.is_valid():
+            referencia_familiar = form.save(commit=False) 
+            referencia_familiar.participante_familiar = participante 
+            referencia_familiar.save() 
+            print(f"ID del participante asociado: {participante.id}") 
+            return redirect('registrar_hecho', participante_id=participante.id)
+    else:
+        form = ReferenciaFamiliarForm()
+    
+    return render(request, 'sistema/referencia_familiar.html', {'form': form, 'participante': participante})
 
+@login_required
+def registrar_agresor(request, participante_id):
+    participante = get_object_or_404(Participante, id=participante_id)
 
+    if request.method == 'POST':
+        form = AgresorForm(request.POST)
+        if form.is_valid():
+            agresor = form.save(commit=False)
+            agresor.participante = participante 
+            agresor.save()
+            return redirect('home')
+    else:
+        form = AgresorForm()
 
+    return render(request, 'sistema/registrar_agresor.html', {'form': form, 'participante': participante})
+
+@login_required
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -81,6 +131,24 @@ def login_view(request):
             messages.error(request, 'Usuario o contraseña incorrectos.')
 
     return render(request, 'sistema/login.html')
+
+@login_required
+def registrar_hecho(request, participante_id):
+    participante = get_object_or_404(Participante, id=participante_id)
+
+    if request.method == 'POST':
+        form = HechoForm(request.POST)
+        if form.is_valid():
+            hecho = form.save(commit=False)
+            hecho.participante = participante  
+            hecho.save()
+            print(f"ID del hecho creado: {hecho.id}")  
+            return redirect('registrar_agresor', participante_id=participante.id)  
+    else:
+        form = HechoForm()
+
+    return render(request, 'sistema/registrar_hecho.html', {'form': form, 'participante': participante})
+
 
 @login_required
 def home_view(request):
@@ -117,23 +185,22 @@ def calcular_gastos_view(request):
 
 @login_required
 def restablecer_contrasena_view(request, user_id):
-    grupos_permitidos = ['Administrador']  # O el grupo que desees
+    grupos_permitidos = ['Administrador']  
     if not request.user.groups.filter(name__in=grupos_permitidos).exists():
         return render(request, 'sistema/acceso_denegado.html', status=403)
 
-    # Obtener el usuario cuyo password se desea restablecer
+
     user = get_object_or_404(User, id=user_id)
 
     if request.method == 'POST':
         contraseña_nueva = request.POST.get('contraseña_nueva')
         confirmar_contraseña = request.POST.get('confirmar_contraseña')
 
-        # Validar que las contraseñas coincidan
         if contraseña_nueva != confirmar_contraseña:
             messages.error(request, 'Las contraseñas no coinciden.')
             return redirect('restablecer_contrasena', user_id=user.id)
 
-        # Si las contraseñas coinciden, actualizar la contraseña
+
         user.set_password(contraseña_nueva)
         user.save()
 
@@ -150,7 +217,7 @@ def administrar_usuarios_view(request):
         return render(request, 'sistema/acceso_denegado.html', status=403)
 
     if request.method == 'POST':
-        # Obtener datos del formulario
+       
         user_id = request.POST.get('user_id')
         nombre = request.POST.get('nombre')
         apellido = request.POST.get('apellido')
@@ -158,7 +225,7 @@ def administrar_usuarios_view(request):
         contraseña = request.POST.get('contraseña')
         nivel_usuario = request.POST.get('nivel-usuario')
 
-        # Validar el nivel de usuario y asignar grupo
+      
         if nivel_usuario == '1':  # Administrador
             grupo = Group.objects.get(name='Administrador')
         elif nivel_usuario == '2':  # Recepcionista
@@ -170,19 +237,19 @@ def administrar_usuarios_view(request):
             return redirect('administrar_usuarios')
 
         if user_id:
-            # Actualizar usuario existente
+            
             user = get_object_or_404(User, id=user_id)
             user.first_name = nombre
             user.last_name = apellido
             user.email = correo
-            if contraseña:  # Solo actualizar contraseña si se ha proporcionado
+            if contraseña:  
                 user.set_password(contraseña)
-            user.groups.clear()  # Limpiar los grupos actuales
-            user.groups.add(grupo)  # Asignar el nuevo grupo
+            user.groups.clear() 
+            user.groups.add(grupo)  
             user.save()
             messages.success(request, 'Usuario actualizado exitosamente.')
         else:
-            # Crear nuevo usuario
+           
             try:
                 user = User.objects.create_user(
                     username=correo,
@@ -191,7 +258,7 @@ def administrar_usuarios_view(request):
                     first_name=nombre,
                     last_name=apellido
                 )
-                # Asignar el grupo al nuevo usuario
+                
                 user.groups.add(grupo)
                 user.save()
                 messages.success(request, 'Usuario registrado exitosamente.')
