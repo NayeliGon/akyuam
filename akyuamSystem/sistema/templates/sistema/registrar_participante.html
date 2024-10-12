@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>Formulario de Participante</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -100,5 +101,130 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+=======
+    <title>Registrar Participante</title>
+    <style>
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<h2 style="text-align:center;">Registro de Participante</h2>
+
+<form action="{% url 'registrar_participante' %}" method="post">
+    {% csrf_token %}
+    <form method="post" novalidate>
+        {% csrf_token %}
+        
+        <!-- Campo para el Número de Expediente -->
+        <div>
+            <label for="no_expediente">Número de Expediente</label>
+            <input type="text" id="no_expediente" name="no_expediente" value="{{ form.no_expediente.value }}" readonly>
+        </div>
+    
+        <!-- Resto de los campos del formulario -->
+        {{ form.as_p }}
+    
+        <button type="submit">Registrar Participante</button>
+    </form>
+    
+    <label for="referente">Referente</label>
+    <input type="text" id="referente" name="referente" maxlength="100">
+
+    <label for="hora_ingreso">Hora de Ingreso</label>
+    <input type="time" id="hora_ingreso" name="hora_ingreso" required>
+
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" maxlength="50" required>
+
+    <label for="apellido">Apellido</label>
+    <input type="text" id="apellido" name="apellido" maxlength="50" required>
+
+    <label for="telefono">Teléfono</label>
+    <input type="text" id="telefono" name="telefono" maxlength="15">
+
+    <label for="dpi">DPI</label>
+    <input type="text" id="dpi" name="dpi" maxlength="20">
+
+    <!-- Campos de selección relacionados con claves foráneas -->
+    <label for="etnia">Etnia</label>
+    <select id="etnia" name="etnia">
+        <option value="">Seleccione una opción</option>
+        <!-- Aquí agregarás las opciones desde tu vista -->
+    </select>
+
+    <label for="municipio_nacimiento">Municipio de Nacimiento</label>
+    <select id="municipio_nacimiento" name="municipio_nacimiento">
+        <option value="">Seleccione una opción</option>
+        <!-- Aquí agregarás las opciones desde tu vista -->
+    </select>
+
+    <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento">
+
+    <!-- Continúa con el resto de campos -->
+    <label for="estado_civil">Estado Civil</label>
+    <select id="estado_civil" name="estado_civil">
+        <option value="">Seleccione una opción</option>
+        <!-- Aquí agregarás las opciones desde tu vista -->
+    </select>
+
+    <label for="direccion">Dirección</label>
+    <input type="text" id="direccion" name="direccion" maxlength="100">
+
+    <label for="ocupacion">Ocupación</label>
+    <input type="text" id="ocupacion" name="ocupacion" maxlength="100">
+
+    <label for="direccion_trabajo">Dirección de Trabajo</label>
+    <input type="text" id="direccion_trabajo" name="direccion_trabajo" maxlength="100">
+
+    <label for="telefono_trabajo">Teléfono de Trabajo</label>
+    <input type="text" id="telefono_trabajo" name="telefono_trabajo" maxlength="15">
+
+    <!-- Campos adicionales -->
+    <label for="antecedentes_enfermedad">Antecedentes de Enfermedad</label>
+    <input type="checkbox" id="antecedentes_enfermedad" name="antecedentes_enfermedad">
+
+    <label for="discapacidad">Discapacidad</label>
+    <input type="text" id="discapacidad" name="discapacidad" maxlength="100">
+
+    <!-- Campos booleanos -->
+    <label for="apoyo_familiar">Apoyo Familiar</label>
+    <input type="checkbox" id="apoyo_familiar" name="apoyo_familiar">
+
+    <button type="submit">Registrar Participante</button>
+</form>
+
+>>>>>>> main
 </body>
 </html>

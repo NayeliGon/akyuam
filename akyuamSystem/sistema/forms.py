@@ -1,18 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
-from .models import Municipio, Departamento
+from .models import Participante
 
-class MunicipioForm(forms.ModelForm):
+class ParticipanteForm(forms.ModelForm):
     class Meta:
-        model = Municipio
-        fields = ['nombre', 'departamento']
+        model = Participante
+        fields = ['nombre', 'apellido', 'no_expediente']  # Asegúrate de incluir todos los campos necesarios
 
-class DepartamentoForm(forms.ModelForm):
-    class Meta:
-        model = Departamento
-        fields = ['nombre']
-
-
-class LoginForm(AuthenticationForm):
-    username = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
