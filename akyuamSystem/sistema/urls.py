@@ -1,13 +1,18 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.decorators import login_required
+from .views import registrar_participante
+from .views import registrar_idioma
+from .views import registrar_hijo
+from .views import referenciaFamiliar
+from .views import registrar_hecho
+from .views import registrar_agresor
 
 urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('home/', views.home_view, name='home'),  
     path('sesiones/',login_required( views.sesiones_view), name='sesiones'),  
     path('emergencias/', login_required(views.emergencias_view), name='emergencias'),  
-    path('registrar-participante/', login_required(views.registrar_participante_view), name='registrar_participante'), 
     path('consulta-asistencia/', login_required(views.consulta_asistencia_view), name='consulta_asistencia'), 
     path('calcular-gastos/', login_required(views.calcular_gastos_view), name='calcular_gastos'),  
     path('administrar-usuarios/', login_required(views.administrar_usuarios_view), name='administrar_usuarios'),  
@@ -16,4 +21,13 @@ urlpatterns = [
     path('enviar-notificacion/', views.envio_boton_view, name='notificacion_emergencia'),
 
     path('restablecer-contrasena/<int:user_id>/', views.restablecer_contrasena_view, name='restablecer_contrasena'),
+    path('registrar-idioma/', registrar_idioma, name='registrar_idioma'),
+    path('registrar-participante/', views.registrar_participante, name='registrar_participante'),
+    path('registrar_hijo/<int:participante_id>/', views.registrar_hijo, name='registrar_hijo'),
+    path('registrar-hijo-omitir/<int:participante_id>/', views.no_registrar_hijo, name='omitir_registrar_hijo'),
+    path('referencia-familiar/<int:participante_id>/', views.referenciaFamiliar, name='referencia_familiar'),
+    path('referencia-familiar-omitir/<int:participante_id>/', views.omitir_referenciaFamiliar, name='omitir_referencia_familiar'),
+    path('registrar-hecho/<int:participante_id>/', views.registrar_hecho, name='registrar_hecho'),
+    path('registrar-hecho-omitir/<int:participante_id>/', views.omitir_registrar_hecho, name='omitir_registrar_hecho'),
+    path('registrar-agresor/<int:participante_id>/', views.registrar_agresor, name='registrar_agresor'),
 ]

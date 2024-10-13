@@ -56,7 +56,7 @@ ROOT_URLCONF = 'akyuamSystem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],  # Asegúrate de que BASE_DIR esté definido correctamente
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,6 +68,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'akyuamSystem.wsgi.application'
 
@@ -111,11 +112,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Guatemala'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

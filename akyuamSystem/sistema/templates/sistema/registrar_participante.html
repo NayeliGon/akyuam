@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
+
     <title>Formulario de Participante</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
+<!--
 <body>
     <div class="container mt-5">
         <h2 class="text-center mb-4">Entrevista a Usuaria</h2>
         <form>
-            <!-- Sección: Datos de la Usuaria -->
+             Sección: Datos de la Usuaria 
             <div class="card mb-4">
                 <div class="card-header bg-primary text-white">
                     Datos de la Usuaria
@@ -45,21 +51,21 @@
                             <label for="municipio" class="form-label">Municipio</label>
                             <select class="form-select" id="municipio">
                                 <option selected>Selecciona un municipio</option>
-                                <!-- Opciones de municipios -->
+                                 Opciones de municipios 
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="departamento" class="form-label">Departamento</label>
                             <select class="form-select" id="departamento">
                                 <option selected>Selecciona un departamento</option>
-                                <!-- Opciones de departamentos -->
+                                 Opciones de departamentos 
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Sección: Datos Familiares -->
+             Sección: Datos Familiares 
             <div class="card mb-4">
                 <div class="card-header bg-success text-white">
                     Datos Familiares
@@ -75,11 +81,11 @@
                             <input type="number" class="form-control" id="hijo_edad" placeholder="Edad del niño">
                         </div>
                     </div>
-                    <!-- Agregar más hijos si es necesario -->
+                     Agregar más hijos si es necesario 
                 </div>
             </div>
 
-            <!-- Sección: Descripción del Hecho -->
+             Sección: Descripción del Hecho 
             <div class="card mb-4">
                 <div class="card-header bg-danger text-white">
                     Descripción del Hecho
@@ -92,139 +98,371 @@
                 </div>
             </div>
 
-            <!-- Botón de Enviar -->
+            Botón de Enviar 
             <div class="d-grid gap-2 col-6 mx-auto">
                 <button type="submit" class="btn btn-primary">Enviar</button>
             </div>
         </form>
     </div>
 
-    <!-- Bootstrap JS -->
+     Bootstrap JS 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-=======
+
     <title>Registrar Participante</title>
+
+    <title>Formulario de Participante</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
     <style>
-        form {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        .sidebar {
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            padding-top: 20px;
         }
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #4CAF50;
+        .sidebar a {
             color: white;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
         }
-        button:hover {
-            background-color: #45a049;
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        .input-group-text {
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
         }
     </style>
 </head>
+-->
+
+
+<style>
+    .sidebar {
+        height: 100vh;
+        width: 200px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #343a40;
+        padding-top: 20px;
+    }
+    .sidebar a {
+        color: white;
+        padding: 10px;
+        text-decoration: none;
+        display: block;
+    }
+    .sidebar a:hover {
+        background-color: #495057;
+    }
+    .content {
+        margin-left: 220px;
+        padding: 20px;
+    }
+    .input-group-text {
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+    }
+</style>
+
 <body>
+    <div class="sidebar">
+        <a href="{% url 'home' %}"><i class="fas fa-arrow-left"></i> Regresar</a>
+        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Salir</a>
+    </div>
 
-<h2 style="text-align:center;">Registro de Participante</h2>
+    <div class="content">
+        <div class="container">
+            <h2 class="mb-4">Formulario de Participante</h2>
+            <form method="POST">
+                {% csrf_token %}
+                
+                <!-- Fila 1 -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="referente" class="form-label">Referente</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            {{ form.referente }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="hora_ingreso" class="form-label">Hora de Ingreso</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-clock" ></i></span>
+                            
+                            {{ form.hora_ingreso }}
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="dpi" class="form-label">DPI</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                            {{ form.dpi }}
+                        </div>
+                    </div>
+                </div>
 
-<form action="{% url 'registrar_participante' %}" method="post">
-    {% csrf_token %}
-    <form method="post" novalidate>
-        {% csrf_token %}
-        
-        <!-- Campo para el Número de Expediente -->
-        <div>
-            <label for="no_expediente">Número de Expediente</label>
-            <input type="text" id="no_expediente" name="no_expediente" value="{{ form.no_expediente.value }}" readonly>
+                <!-- Fila 2 -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                            {{ form.nombre }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-id-card-alt"></i></span>
+                            {{ form.apellido }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            {{ form.telefono }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fila 3 -->
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                        <div class="input-group date">
+                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            <div class="form-control datepicker">
+                            {{ form.fecha_nacimiento }}
+                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="etnia" class="form-label">Etnia</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-users"></i></span>
+                            {{ form.etnia }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="estado_civil" class="form-label">Estado Civil</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-heart"></i></span>
+                            {{ form.estado_civil }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fila 4 -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                            {{ form.direccion }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="municipio_direccion" class="form-label">Municipio de Dirección</label>
+                        {{ form.municipio_direccion }}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="lectura_escritura" class="form-label">Sabe Leer/Escribir</label>
+                        {{ form.lectura_escritura }}
+                    </div>
+                </div>
+
+                <!-- Fila 5 -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="profesion" class="form-label">Profesión</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
+                            {{ form.profesion }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="ocupacion" class="form-label">Ocupación</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
+                            {{ form.ocupacion }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="direccion_trabajo" class="form-label">Dirección de Trabajo</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-building"></i></span>
+                            {{ form.direccion_trabajo }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fila 6 -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="telefono_trabajo" class="form-label">Teléfono de Trabajo</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
+                            {{ form.telefono_trabajo }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="antecedentes_enfermedad" class="form-label">Antecedentes de Enfermedad</label>
+                        {{ form.antecedentes_enfermedad }}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="enfermedad" class="form-label">Enfermedad</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-notes-medical"></i></span>
+                            {{ form.enfermedad }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fila 7 -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="presenta_discapacidad" class="form-label">¿Presenta discapacidad?</label>
+                        {{ form.presenta_discapacidad }}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="discapacidad" class="form-label">Tipo de Discapacidad</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-wheelchair"></i></span>
+                            {{ form.discapacidad }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="estado_gestacion" class="form-label">¿Está en estado de gestación?</label>
+                        {{ form.estado_gestacion }}
+                    </div>
+                </div>
+
+                <!-- Fila 8 -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="tiempo_gestacion" class="form-label">Tiempo de Gestación</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-baby"></i></span>
+                            {{ form.tiempo_gestacion }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="dependencia_adictiva" class="form-label">¿Presenta dependencia adictiva?</label>
+                        {{ form.dependencia_adictiva }}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="dependencia" class="form-label">Tipo de Dependencia</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-exclamation-triangle"></i></span>
+                            {{ form.dependencia }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fila 9 -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="apoyo_familiar" class="form-label">¿Recibe apoyo familiar?</label>
+                        {{ form.apoyo_familiar }}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="escolaridad" class="form-label">Escolaridad</label>
+                        {{ form.escolaridad }}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="religion" class="form-label">Religión</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-praying-hands"></i></span>
+                            {{ form.religion }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fila 10 -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="estado_vivienda" class="form-label">Estado de Vivienda</label>
+                        {{ form.estado_vivienda }}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="municipio_nacimiento" class="form-label">Municipio de Nacimiento</label>
+                        {{ form.municipio_nacimiento }}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="relacion_afinidad" class="form-label">Relación de Afinidad</label>
+                        {{ form.relacion_afinidad }}
+                    </div>
+                </div>
+
+                <!-- Fila 11 -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="idioma" class="form-label">Idioma</label>
+                        {{ form.idioma }}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="municipio_direccion" class="form-label">Municipio de Dirección</label>
+                        {{ form.municipio_direccion }}
+                    </div>
+                </div>
+
+                <!-- Botón de envío -->
+                <button type="submit" class="btn btn-primary mt-4">Guardar</button>
+            </form>
         </div>
+    </div>
+
     
-        <!-- Resto de los campos del formulario -->
-        {{ form.as_p }}
     
-        <button type="submit">Registrar Participante</button>
-    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     
-    <label for="referente">Referente</label>
-    <input type="text" id="referente" name="referente" maxlength="100">
+    
+    <script>
 
-    <label for="hora_ingreso">Hora de Ingreso</label>
-    <input type="time" id="hora_ingreso" name="hora_ingreso" required>
+        $(document).ready(function() {
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
+    </script>
 
-    <label for="nombre">Nombre</label>
-    <input type="text" id="nombre" name="nombre" maxlength="50" required>
+    <script>
+    const timepicker1 = new tempusDominus.TempusDominus(document.getElementById('timepicker1'), {
+      display: {
+        components: {
+          hours: true,
+          minutes: true,
+          seconds: false
+        }
+      }
+    });
+    </script>
 
-    <label for="apellido">Apellido</label>
-    <input type="text" id="apellido" name="apellido" maxlength="50" required>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    
 
-    <label for="telefono">Teléfono</label>
-    <input type="text" id="telefono" name="telefono" maxlength="15">
 
-    <label for="dpi">DPI</label>
-    <input type="text" id="dpi" name="dpi" maxlength="20">
-
-    <!-- Campos de selección relacionados con claves foráneas -->
-    <label for="etnia">Etnia</label>
-    <select id="etnia" name="etnia">
-        <option value="">Seleccione una opción</option>
-        <!-- Aquí agregarás las opciones desde tu vista -->
-    </select>
-
-    <label for="municipio_nacimiento">Municipio de Nacimiento</label>
-    <select id="municipio_nacimiento" name="municipio_nacimiento">
-        <option value="">Seleccione una opción</option>
-        <!-- Aquí agregarás las opciones desde tu vista -->
-    </select>
-
-    <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento">
-
-    <!-- Continúa con el resto de campos -->
-    <label for="estado_civil">Estado Civil</label>
-    <select id="estado_civil" name="estado_civil">
-        <option value="">Seleccione una opción</option>
-        <!-- Aquí agregarás las opciones desde tu vista -->
-    </select>
-
-    <label for="direccion">Dirección</label>
-    <input type="text" id="direccion" name="direccion" maxlength="100">
-
-    <label for="ocupacion">Ocupación</label>
-    <input type="text" id="ocupacion" name="ocupacion" maxlength="100">
-
-    <label for="direccion_trabajo">Dirección de Trabajo</label>
-    <input type="text" id="direccion_trabajo" name="direccion_trabajo" maxlength="100">
-
-    <label for="telefono_trabajo">Teléfono de Trabajo</label>
-    <input type="text" id="telefono_trabajo" name="telefono_trabajo" maxlength="15">
-
-    <!-- Campos adicionales -->
-    <label for="antecedentes_enfermedad">Antecedentes de Enfermedad</label>
-    <input type="checkbox" id="antecedentes_enfermedad" name="antecedentes_enfermedad">
-
-    <label for="discapacidad">Discapacidad</label>
-    <input type="text" id="discapacidad" name="discapacidad" maxlength="100">
-
-    <!-- Campos booleanos -->
-    <label for="apoyo_familiar">Apoyo Familiar</label>
-    <input type="checkbox" id="apoyo_familiar" name="apoyo_familiar">
-
-    <button type="submit">Registrar Participante</button>
-</form>
-
->>>>>>> main
 </body>
 </html>
