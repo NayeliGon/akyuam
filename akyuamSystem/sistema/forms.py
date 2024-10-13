@@ -6,6 +6,41 @@ from .models import ReferenciaFamiliar
 from .models import Hecho
 from .models import Agresor
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
+from django.utils.translation import gettext_lazy as _
+
+from django.contrib.auth.forms import PasswordChangeForm
+from django.utils.translation import gettext_lazy as _
+from django import forms
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['old_password'].label = _("Contraseña actual")
+        self.fields['new_password1'].label = _("Nueva contraseña")
+        self.fields['new_password2'].label = _("Confirmar nueva contraseña")
+        self.fields['new_password1'].help_text = _("Debe tener al menos 8 caracteres y no puede ser muy común.")
+        self.fields['new_password2'].help_text = _("Introduce nuevamente la nueva contraseña.")
+
+        # Aplicar clases de Bootstrap a los campos
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
+
+class EditarPerfilForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email', 'username']
+        widgets = {
+            'email': forms.EmailInput(attrs={'placeholder': 'Correo', 'class': 'editable', 'disabled': 'disabled'}),
+            'username': forms.TextInput(attrs={'placeholder': 'Nombre de usuario', 'class': 'editable', 'disabled': 'disabled'}),
+        }
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'editable'  # Añade la clase editable
+            field.widget.attrs['disabled'] = 'disabled' 
 
 class AgresorForm(forms.ModelForm):
     class Meta:

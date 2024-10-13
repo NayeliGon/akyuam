@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px 10px 10px 40px;  /* Espacio a la izquierda para el ícono */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+        input[disabled] {
+            background-color: #e9ecef;
+        }
+        button {
+            background-color: #5a4d82;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #741e78;
+        }
+        .icon {
+            position: absolute;
+            left: 10px;
+            top: 35px;
+            color: #888;
+        }
+        .toggle-password {
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 35px;
+            color: #888;
+        }
+        .message {
+            color: red;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .success {
+            color: #741e78;
+        }
+        .back-home {
+            background-color: #04115a;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .back-home:hover {
+            background-color: #0080b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Botón para regresar al Home -->
+        <a href="{% url 'home' %}" class="back-home">Regresar al Home</a>
+
+        <h1>Editar Perfil</h1>
+
+        <!-- Mensajes de éxito o error -->
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Nombre de usuario</label>
+                <i class="fas fa-user icon"></i>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="email">Correo</label>
+                <i class="fas fa-envelope icon"></i>
+                {{ form.email }}
+            </div>
+            <button type="button" onclick="toggleEdit()">Editar</button>
+            <button type="submit">Guardar cambios</button>
+        </form>
+        <br><br>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="old_password">Contraseña actual</label>
+                <i class="fas fa-lock icon"></i>
+                <input type="password" id="old_password" name="old_password" required>
+            </div>
+            <div class="form-group">
+                <label for="new_password1">Nueva contraseña</label>
+                <i class="fas fa-lock icon"></i>
+                <input type="password" id="new_password1" name="new_password1" required>
+                <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('new_password1')"></i>
+            </div>
+            <div class="form-group">
+                <label for="new_password2">Confirmar nueva contraseña</label>
+                <i class="fas fa-lock icon"></i>
+                <input type="password" id="new_password2" name="new_password2" required>
+                <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('new_password2')"></i>
+            </div>
+            <button type="submit" class="btn btn-primary">Cambiar contraseña</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleEdit() {
+            const inputs = document.querySelectorAll('.editable');
+            inputs.forEach(input => {
+                input.disabled = !input.disabled;
+            });
+        }
+
+        function togglePasswordVisibility(id) {
+            const input = document.getElementById(id);
+            const type = input.getAttribute("type") === "password" ? "text" : "password";
+            input.setAttribute("type", type);
+
+            const icon = input.nextElementSibling;
+            icon.classList.toggle("fa-eye");
+            icon.classList.toggle("fa-eye-slash");
+        }
+    </script>
+</body>
+</html>

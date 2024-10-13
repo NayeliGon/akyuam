@@ -107,6 +107,7 @@
 </head>
 <body>
     <div class="container">
+        <br><br>
         <h1>Menú</h1>
         <div class="menu-grid">
             <a href="{% url 'registrar_participante' %}" class="menu-item">
@@ -133,11 +134,23 @@
                 <span>🚨</span> 
                 <p>Emergencias</p>
             </a>
+    
+            <!-- Nuevas opciones de Perfil y Albergue -->
+            <a href="{% url 'perfil' %}" class="menu-item">
+                <span>🙍‍♂️</span>
+                <p>Perfil</p>
+            </a>
+            <a href="{% url 'albergue' %}" class="menu-item">
+                <span>🏠</span>
+                <p>Albergue</p>
+            </a>
         </div>
+    
         <div class="logout">
             <a href="{% url 'logout' %}"><span>⏩</span></a>
         </div>
     </div>
+    
 
     <div class="footer">
         
