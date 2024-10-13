@@ -39,4 +39,7 @@ urlpatterns = [
     path('albergue/', views.albergue_view, name='albergue'),
     path('change-password/', views.change_password, name='change_password'),
     path('eliminar_usuario/<int:user_id>/', eliminar_usuario, name='eliminar_usuario'),
+    #Rutas para ver y actualizar participante
+    path('participantes/', views.listar_participantes_view, name='participantes_lista'),
+    path('participantes-actualizar/<int:id>/', views.actualizar_participante_view, name='actualizar_participante'),
 ]

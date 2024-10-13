@@ -119,7 +119,7 @@ def perfil_view(request):
 
 def albergue_view(request):
     
-    return render(request, 'albergue.html')
+    return render(request, 'sistema/albergue.html')
 
 
 def registrar_idioma(request):
@@ -347,7 +347,7 @@ def administrar_usuarios_view(request):
         if nivel_usuario == '1':  # Administrador
             grupo = Group.objects.get(name='Administrador')
         elif nivel_usuario == '2':  # Recepcionista
-            grupo = Group.objects.get(name='Recepcionista')
+            grupo = Group.objects.get(name='Recepcion')
         elif nivel_usuario == '3':  # Encargado
             grupo = Group.objects.get(name='Encargado')
         else:
@@ -460,5 +460,29 @@ def envio_boton_view(request):
        
     else:
         return HttpResponse('Solicitud inválida', status=400)
+
+
+#Vista para listar las participantes
+@login_required
+def listar_participantes_view(request):
+    if request.method == 'GET':
+        participantes = Participante.objects.values('id', 'nombre', 'apellido', 'direccion', 'dpi', 'telefono').order_by('id')  # Solo los campos necesarios
+        return render(request, 'sistema/lista_participantes.html', {'participantes': participantes})
+
+
+#Actualizar datos generales de la participante
+@login_required
+def actualizar_participante_view(request, id):
+    participante = get_object_or_404(Participante, id=id)
+    if request.method == 'POST':
+        form = ParticipanteForm(request.POST, instance=participante)
+        if form.is_valid():
+            form.save()
+            return redirect('participantes_lista')  # Redirige a la lista de participantes
+    else:
+        form = ParticipanteForm(instance=participante)
+    
+    return render(request, 'sistema/actualizar_participante.html', {'form': form})
+
 
 
