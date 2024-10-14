@@ -109,6 +109,11 @@ class HechoForm(forms.ModelForm):
             'institucion_denuncia': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super(HechoForm, self).__init__(*args, **kwargs)
+        self.fields['fecha_denuncia'].required = False
+        self.fields['institucion_denuncia'].required = False
+
 class ReferenciaFamiliarForm(forms.ModelForm):
     class Meta:
         model = ReferenciaFamiliar
@@ -125,6 +130,12 @@ class HijoForm(forms.ModelForm):
     class Meta:
         model = Hijo
         fields = ['nombre', 'apellido', 'genero', 'edad', 'es_reconocido', 'es_estudiante', 'establecimiento']
+    
+
+    def __init__(self, *args, **kwargs):
+        super(HijoForm, self).__init__(*args, **kwargs)
+        self.fields['establecimiento'].required = False
+
 
 
 class ParticipanteForm(forms.ModelForm):
@@ -141,47 +152,65 @@ class ParticipanteForm(forms.ModelForm):
         ]
     
 
-    widgets = {
-        'referente': forms.TextInput(attrs={'class': 'form-control'}),
-        'hora_ingreso': forms.TimeInput(attrs={'class': 'form-control','type': 'time'}),
-        'nombre': forms.TextInput(attrs={'class': 'form-control'}),
-        'apellido': forms.TextInput(attrs={'class': 'form-control'}),
-        'telefono': forms.TextInput(attrs={'class': 'form-control'}),
-        'dpi': forms.TextInput(attrs={'class': 'form-control'}),
-        'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control datepicker'}),
-        'direccion': forms.TextInput(attrs={'class': 'form-control'}),
-        'lectura_escritura': forms.CheckboxInput(attrs={'class': 'form-select'}),
-        'profesion': forms.TextInput(attrs={'class': 'form-control'}),
-        'ocupacion': forms.TextInput(attrs={'class': 'form-control'}),
-        'direccion_trabajo': forms.TextInput(attrs={'class': 'form-control'}),
-        'telefono_trabajo': forms.TextInput(attrs={'class': 'form-control'}),
-        'antecedentes_enfermedad': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-        'enfermedad': forms.TextInput(attrs={'class': 'form-control'}),
-        'presenta_discapacidad': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-        'discapacidad': forms.TextInput(attrs={'class': 'form-control'}),
-        'estado_gestacion': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-        'tiempo_gestacion': forms.TextInput(attrs={'class': 'form-control'}),
-        'dependencia_adictiva': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-        'dependencia': forms.Select(attrs={'class': 'form-select'}),
-        'apoyo_familiar': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-        'escolaridad': forms.Select(attrs={'class': 'form-select'}),
-        'estado_civil': forms.Select(attrs={'class': 'form-select'}),
-        'estado_vivienda': forms.Select(attrs={'class': 'form-select'}),
-        'etnia': forms.Select(attrs={'class': 'form-select'}),
-        'municipio_nacimiento': forms.Select(attrs={'class': 'form-select'}),
-        'relacion_afinidad': forms.Select(attrs={'class': 'form-select'}),
-        'municipio_direccion': forms.Select(attrs={'class': 'form-select'}),
-        'idioma': forms.Select(attrs={'class': 'form-select'}),
-        'religion': forms.Select(attrs={'class': 'form-select'}),
-    }
+        widgets = {
+            'referente': forms.TextInput(attrs={'class': 'form-control'}),
+            'hora_ingreso': forms.TimeInput(attrs={'class': 'form-control','type': 'time'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'apellido': forms.TextInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
+            'dpi': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control datepicker'}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
+            'lectura_escritura': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'profesion': forms.TextInput(attrs={'class': 'form-control'}),
+            'ocupacion': forms.TextInput(attrs={'class': 'form-control'}),
+            'direccion_trabajo': forms.TextInput(attrs={'class': 'form-control'}),
+            'telefono_trabajo': forms.TextInput(attrs={'class': 'form-control'}),
+            'antecedentes_enfermedad': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'enfermedad': forms.TextInput(attrs={'class': 'form-control'}),
+            'presenta_discapacidad': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'discapacidad': forms.TextInput(attrs={'class': 'form-control'}),
+            'estado_gestacion': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'tiempo_gestacion': forms.TextInput(attrs={'class': 'form-control'}),
+            'dependencia_adictiva': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'dependencia': forms.Select(attrs={'class': 'form-select'}),
+            'apoyo_familiar': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'escolaridad': forms.Select(attrs={'class': 'form-select'}),
+            'estado_civil': forms.Select(attrs={'class': 'form-select'}),
+            'estado_vivienda': forms.Select(attrs={'class': 'form-select'}),
+            'etnia': forms.Select(attrs={'class': 'form-select'}),
+            'municipio_nacimiento': forms.Select(attrs={'class': 'form-select'}),
+            'relacion_afinidad': forms.Select(attrs={'class': 'form-select'}),
+            'municipio_direccion': forms.Select(attrs={'class': 'form-select'}),
+            'idioma': forms.Select(attrs={'class': 'form-select'}),
+            'religion': forms.Select(attrs={'class': 'form-select'}),
+        }
 
+     # Modificando campos para que sean opcionales
+    def __init__(self, *args, **kwargs):
+        super(ParticipanteForm, self).__init__(*args, **kwargs)
+        self.fields['profesion'].required = False
+        self.fields['ocupacion'].required = False
+        self.fields['direccion_trabajo'].required = False
+        self.fields['telefono_trabajo'].required = False
+        self.fields['enfermedad'].required = False
+        self.fields['discapacidad'].required = False
+        self.fields['tiempo_gestacion'].required = False
+        self.fields['dependencia'].required = False
+        self.fields['tiempo_gestacion'].required = False
+        self.fields['tiempo_gestacion'].required = False
+        self.fields['tiempo_gestacion'].required = False
 
+        if 'hora_ingreso' not in self.initial:
+            self.fields['hora_ingreso'].initial = timezone.now().strftime('%H:%M')
+
+    '''        
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if 'hora_ingreso' not in self.initial:
             self.fields['hora_ingreso'].initial = timezone.now().strftime('%H:%M')
 
-
+    '''
 class IdiomaForm(forms.ModelForm):
     class Meta:
         model = Idioma

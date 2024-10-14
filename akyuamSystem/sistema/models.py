@@ -153,7 +153,7 @@ class Hijo(models.Model):
     edad = models.CharField(max_length=10)
     es_reconocido = models.BooleanField()
     es_estudiante = models.BooleanField()
-    establecimiento = models.CharField(max_length=100)
+    establecimiento = models.CharField(max_length=100, null=True, blank=True)
     participante_madre = models.ForeignKey(Participante, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -179,8 +179,8 @@ class Hecho(models.Model):
     descripcion_hecho = models.TextField()
     participante = models.ForeignKey(Participante, on_delete=models.CASCADE)
     denuncias = models.BooleanField()
-    fecha_denuncia = models.DateField()
-    institucion_denuncia = models.TextField()
+    fecha_denuncia = models.DateField(blank=True, null=True)
+    institucion_denuncia = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"Hecho en {self.municipio_acontecimiento} el {self.fecha}"
