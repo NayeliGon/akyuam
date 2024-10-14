@@ -486,3 +486,36 @@ def actualizar_participante_view(request, id):
 
 
 
+#Listar hijos de participante
+@login_required
+def hijos_participante_view(request, participante_id):
+    # Obtener la participante
+    participante = get_object_or_404(Participante, id=participante_id)
+    # Obtener los hijos asociados a la participante
+    hijos = Hijo.objects.filter(participante_madre=participante)
+    
+    return render(request, 'sistema/actualizar_hijos.html', {'hijos':hijos})
+
+
+
+
+
+#Actualizar datos de hijos de la participante
+
+@login_required
+def actualizar_hijo_view(request, hijo_id):
+    # Obtener el participante
+    hijo = get_object_or_404(Hijo, id=hijo_id)
+     
+    if request.method == 'POST':
+        form = HijoForm(request.POST, instance=hijo)
+        if form.is_valid():
+            form.save()
+            return redirect('participantes_lista')
+    else:
+        form = HijoForm(instance=hijo)
+    
+    return render(request, 'sistema/actualizar_hijo.html', {'form': form})
+
+
+

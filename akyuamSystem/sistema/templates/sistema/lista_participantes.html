@@ -55,6 +55,7 @@
             <td>
                 <!-- Botón de Actualizar -->
                 <a href="{% url 'actualizar_participante' participante.id %}" class="btn btn-warning"><i class="fas fa-user"></i></a>
+                <a href="{% url 'actualizar_hijos' participante.id %}" class="btn btn-primary"><i class="fas fa-user"></i></a>
               </td>
             </tr>
             {% endfor %}

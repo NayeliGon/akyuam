@@ -42,4 +42,6 @@ urlpatterns = [
     #Rutas para ver y actualizar participante
     path('participantes/', views.listar_participantes_view, name='participantes_lista'),
     path('participantes-actualizar/<int:id>/', views.actualizar_participante_view, name='actualizar_participante'),
+    path('hijos-actualizar/<int:participante_id>/', views.hijos_participante_view, name='actualizar_hijos'),
+    path('hijo-actualizar/<int:hijo_id>/', views.actualizar_hijo_view, name='actualizar_hijo'),
 ]
