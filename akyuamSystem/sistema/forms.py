@@ -45,60 +45,81 @@ class EditarPerfilForm(forms.ModelForm):
 class AgresorForm(forms.ModelForm):
     class Meta:
         model = Agresor
-        fields = [
-            'nombre',
-            'apellido',
-            'telefono',
-            'dpi',
-            'caracteristicas_fisicas',
-            'lectura_escritura',
-            'direccion',
-            'actividad_laboral',
-            'nombre_lugar_trabajo',
-            'direccion_trabajo',
-            'telefono_trabajo',
-            'ingreso_mensual',
-            'posee_bienes',
-            'otros_bienes',
-            'antecedentes_conflictividad',
-            'otros_antecedentes_conflic',
-            'antecedentes_enfermedad',
-            'descripcion_enfermedad',
-            'dependencias_adictivas',
-            'otras_dependencias',
-            'usa_armas',
-            'descripcion_armas',
-            'referencias_personales',
-            'observaciones',
-            'dependencia',
-            'escolaridad',
-            'estado_civil',
-            'etnia',
-            'municipio_nacimiento',
-            'relacion_afinidad',
-            'bien',
-            'tipo_antecedente_conflic',
-        ]
+        exclude= ['participante']  # Excluir el campo 'participante' del formulario
+        widgets={
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'apellido': forms.TextInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
+            'dpi': forms.TextInput(attrs={'class': 'form-control'}),
+            'etnia': forms.Select(attrs={'class': 'form-select'}),  # Select para ForeignKey
+            'municipio_nacimiento': forms.Select(attrs={'class': 'form-select'}),  # Select para ForeignKey
+            'caracteristicas_fisicas': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'estado_civil': forms.Select(attrs={'class': 'form-select'}),  # Select para ForeignKey
+            'relacion_afinidad': forms.Select(attrs={'class': 'form-select'}),  # Select para ForeignKey
+            'lectura_escritura': forms.CheckboxInput(attrs={'class': 'form-check-input'}),  # Checkbox para BooleanField
+            'escolaridad': forms.Select(attrs={'class': 'form-select'}),  # Select para ForeignKey
+            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
+            'actividad_laboral': forms.TextInput(attrs={'class': 'form-control'}),
+            'nombre_lugar_trabajo': forms.TextInput(attrs={'class': 'form-control'}),
+            'direccion_trabajo': forms.TextInput(attrs={'class': 'form-control'}),
+            'telefono_trabajo': forms.TextInput(attrs={'class': 'form-control'}),
+            'ingreso_mensual': forms.TextInput(attrs={'class': 'form-control'}),
+            'posee_bienes': forms.CheckboxInput(attrs={'class': 'form-check-input'}),  # Checkbox para BooleanField
+            'bien': forms.Select(attrs={'class': 'form-select'}),  # Select para ForeignKey
+            'otros_bienes': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'antecedentes_conflictividad': forms.CheckboxInput(attrs={'class': 'form-check-input'}),  # Checkbox para BooleanField
+            'tipo_antecedente_conflic': forms.Select(attrs={'class': 'form-select'}),  # Select para ForeignKey
+            'otros_antecedentes_conflic': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'antecedentes_enfermedad': forms.CheckboxInput(attrs={'class': 'form-check-input'}),  # Checkbox para BooleanField
+            'descripcion_enfermedad': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'dependencias_adictivas': forms.CheckboxInput(attrs={'class': 'form-check-input'}),  # Checkbox para BooleanField
+            'dependencia': forms.Select(attrs={'class': 'form-select'}),  # Select para ForeignKey
+            'otras_dependencias': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'usa_armas': forms.CheckboxInput(attrs={'class': 'form-check-input'}),  # Checkbox para BooleanField
+            'descripcion_armas': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'referencias_personales': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'observaciones': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
 
 class HechoForm(forms.ModelForm):
     class Meta:
         model = Hecho
         fields = [
             'tiempo_violencia',
+            'tipo_violencia',
             'fecha',
             'hora',
+            'municipio_acontecimiento',
             'descripcion_hecho',
             'denuncias',
             'fecha_denuncia',
             'institucion_denuncia',
-            'municipio_acontecimiento',
-            'tipo_violencia'
+            
+           
         ]
+        widgets = {
+            'tiempo_violencia': forms.TextInput(attrs={'class': 'form-control'}),
+            'tipo_violencia': forms.Select(attrs={'class': 'form-select'}),
+            'fecha': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'hora': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+            'municipio_acontecimiento': forms.Select(attrs={'class': 'form-select'}),
+            'descripcion_hecho': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'denuncias': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'fecha_denuncia': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'institucion_denuncia': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+        }
 
 class ReferenciaFamiliarForm(forms.ModelForm):
     class Meta:
         model = ReferenciaFamiliar
         fields = ['nombre', 'apellido', 'direccion', 'telefono', 'relacion_afinidad']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'apellido': forms.TextInput(attrs={'class': 'form-control'}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
+            'relacion_afinidad': forms.Select(attrs={'class': 'form-select'}),
+        }
 
 class HijoForm(forms.ModelForm):
     class Meta:

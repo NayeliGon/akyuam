@@ -186,6 +186,7 @@ def referenciaFamiliar(request, participante_id):
         if form.is_valid():
             referencia_familiar = form.save(commit=False) 
             referencia_familiar.participante_familiar = participante  
+            referencia_familiar.save()  # Guardar en la base de datos
             print(f"ID del participante asociado: {participante.id}") 
             return redirect('registrar_hecho', participante_id=participante.id)  
     else:
@@ -215,7 +216,9 @@ def registrar_agresor(request, participante_id):
             agresor = form.save(commit=False)
             agresor.participante = participante  
             agresor.save()
-            return redirect('home')  
+            return redirect('home') 
+        else:
+            print(form.errors)  
     else:
         form = AgresorForm()
 
