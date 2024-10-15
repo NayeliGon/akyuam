@@ -42,6 +42,16 @@ urlpatterns = [
     #Rutas para ver y actualizar participante
     path('participantes/', views.listar_participantes_view, name='participantes_lista'),
     path('participantes-actualizar/<int:id>/', views.actualizar_participante_view, name='actualizar_participante'),
+    #Rutas para ver y actualizar hijos de participantes
     path('hijos-actualizar/<int:participante_id>/', views.hijos_participante_view, name='actualizar_hijos'),
     path('hijo-actualizar/<int:hijo_id>/', views.actualizar_hijo_view, name='actualizar_hijo'),
+    #Rutas para ver y actualizar familiares de participantes
+    path('lista-familiares/<int:participante_id>/', views.listar_familiares_view, name='lista_familiares'),
+    path('familiar-actualizar/<int:familiar_id>/', views.actualizar_familiar_view, name='actualizar_familiar'),
+    #Rutas para ver y actualizar Hechos de participantes
+    path('lista-hechos/<int:participante_id>/', views.listar_hechos_view, name='lista_hechos'),
+    path('hecho-actualizar/<int:hecho_id>/', views.actualizar_hecho_view, name='actualizar_hechos'),
+    #Rutas para ver y actualizar Agresores de participantes
+    path('lista-agresores/<int:participante_id>/', views.listar_agresores_view, name='lista_agresores'),
+    path('agresor-actualizar/<int:agresor_id>/', views.actualizar_agresor_view, name='actualizar_agresor'),
 ]

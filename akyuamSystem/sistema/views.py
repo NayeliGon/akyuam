@@ -449,10 +449,12 @@ def envio_boton_view(request):
             nombre = participante.nombre
             apellido= participante.apellido
             direccion = participante.direccion
+            telefono= participante.telefono
+
 
     
-            print('Datos obtenidos',nombre,apellido, direccion)
-            notificacion_boton.enviar_mensaje(nombre,apellido,direccion)  # Funcion para enviar mensajes
+            print('Datos obtenidos',nombre,apellido, direccion, telefono)
+            notificacion_boton.enviar_mensaje(nombre,apellido,direccion, telefono)  # Funcion para enviar mensajes
             return HttpResponse('Mensaje enviado')
 
 
@@ -522,3 +524,110 @@ def actualizar_hijo_view(request, hijo_id):
 
 
 
+
+@login_required
+def listar_familiares_view(request, participante_id):
+    participante = get_object_or_404(Participante, id=participante_id)
+
+    try:
+        familiares = ReferenciaFamiliar.objects.filter(participante_familiar=participante)
+    except ReferenciaFamiliar.DoesNotExist:
+        print('El familiar no existe')
+
+    return render(request, 'sistema/lista-familiares.html', {'familiares':familiares})
+
+
+
+#Mostrar formulario para actualizar familiar de participante
+
+@login_required
+def actualizar_familiar_view(request, familiar_id):
+     
+
+    try:
+        familiar = ReferenciaFamiliar.objects.get(id=familiar_id)
+    except ReferenciaFamiliar.DoesNotExist:
+        print('El familiar no existe')
+
+    if request.method == 'POST':
+        form = ReferenciaFamiliarForm(request.POST, instance=familiar)
+        if form.is_valid():
+            form.save()
+            return redirect('participantes_lista')
+    else:
+        form = ReferenciaFamiliarForm(instance=familiar)
+    
+    return render(request, 'sistema/actualizar_familiar.html', {'form': form})
+
+
+
+#obtener la lista de hechos
+@login_required
+def listar_hechos_view(request, participante_id):
+    participante = get_object_or_404(Participante, id=participante_id)
+
+    try:
+        hechos = Hecho.objects.filter(participante=participante)
+    except Hecho.DoesNotExist:
+        print('El familiar no existe')
+
+    return render(request, 'sistema/lista-hechos.html', {'hechos':hechos})
+
+
+
+#Mostrar formulario para actualizar hecho de participante
+
+@login_required
+def actualizar_hecho_view(request, hecho_id):
+     
+
+    try:
+        hecho = Hecho.objects.get(id=hecho_id)
+    except Hecho.DoesNotExist:
+        print('El Hecho no existe')
+
+    if request.method == 'POST':
+        form = HechoForm(request.POST, instance=hecho)
+        if form.is_valid():
+            form.save()
+            return redirect('participantes_lista')
+    else:
+        form = HechoForm(instance=hecho)
+    
+    return render(request, 'sistema/actualizar_hecho.html', {'form': form})
+
+
+
+#obtener la lista de agresores
+@login_required
+def listar_agresores_view(request, participante_id):
+    participante = get_object_or_404(Participante, id=participante_id)
+
+    try:
+        agresores = Agresor.objects.filter(participante=participante)
+    except Agresor.DoesNotExist:
+        print('El familiar no existe')
+
+    return render(request, 'sistema/lista_agresores.html', {'agresores':agresores})
+
+
+#Mostrar formulario para actualizar agresor de participante
+
+@login_required
+def actualizar_agresor_view(request, agresor_id):
+     
+
+    try:
+        agresor = Agresor.objects.get(id=agresor_id)
+    except Agresor.DoesNotExist:
+        print('El agresor no existe')
+
+    if request.method == 'POST':
+        form = AgresorForm(request.POST, instance=agresor)
+        if form.is_valid():
+            form.save()
+            return redirect('participantes_lista')
+    else:
+        form = AgresorForm(instance=agresor)
+    
+    return render(request, 'sistema/actualizar_agresor.html', {'form': form})

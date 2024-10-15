@@ -30,9 +30,9 @@ class CustomPasswordChangeForm(PasswordChangeForm):
 class EditarPerfilForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'username']
+        fields = [ 'username']
         widgets = {
-            'email': forms.EmailInput(attrs={'placeholder': 'Correo', 'class': 'editable', 'disabled': 'disabled'}),
+            #'email': forms.EmailInput(attrs={'placeholder': 'Correo', 'class': 'editable', 'disabled': 'disabled'}),
             'username': forms.TextInput(attrs={'placeholder': 'Nombre de usuario', 'class': 'editable', 'disabled': 'disabled'}),
         }
         

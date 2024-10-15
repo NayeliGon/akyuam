@@ -56,6 +56,9 @@
                 <!-- Botón de Actualizar -->
                 <a href="{% url 'actualizar_participante' participante.id %}" class="btn btn-warning"><i class="fas fa-user"></i></a>
                 <a href="{% url 'actualizar_hijos' participante.id %}" class="btn btn-primary"><i class="fas fa-user"></i></a>
+                <a href="{% url 'lista_familiares' participante.id %}" class="btn btn-success"><i class="fas fa-user"></i></a>
+                <a href="{% url 'lista_hechos' participante.id %}" class="btn btn-secondary"><i class="fas fa-file-alt"></i></a>
+                <a href="{% url 'lista_agresores' participante.id %}" class="btn btn-danger"><i class="fas fa-user-slash"></i></a>
               </td>
             </tr>
             {% endfor %}

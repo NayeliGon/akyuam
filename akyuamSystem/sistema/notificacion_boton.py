@@ -11,13 +11,13 @@ if os.getenv('ENV') != 'production':
 TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
 
-def enviar_mensaje(nombre,apellido,direccion):
+def enviar_mensaje(nombre,apellido,direccion, telefono):
     account_sid = TWILIO_ACCOUNT_SID
     auth_token = TWILIO_AUTH_TOKEN
     client = Client(account_sid, auth_token)
 
     message = client.messages.create(
-        body=f"{nombre} {apellido} está sufriendo violencia intrafamiliar, su dirección es {direccion}",
+        body=f"{nombre} {apellido} está sufriendo violencia intrafamiliar, su dirección es {direccion}, y su número de telefono es {telefono}",
         from_="+18647272971",
         to="+50236313786",
     )
