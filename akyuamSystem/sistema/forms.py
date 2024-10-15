@@ -5,6 +5,7 @@ from .models import Hijo
 from .models import ReferenciaFamiliar
 from .models import Hecho
 from .models import Agresor
+from .models import Sesion
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
@@ -126,6 +127,21 @@ class ReferenciaFamiliarForm(forms.ModelForm):
             'relacion_afinidad': forms.Select(attrs={'class': 'form-select'}),
         }
 
+
+
+class ReferenciaFamiliarExtraForm(forms.ModelForm):
+    class Meta:
+        model = ReferenciaFamiliar
+        fields = ['nombre', 'apellido', 'direccion', 'telefono', 'relacion_afinidad','participante_familiar']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'apellido': forms.TextInput(attrs={'class': 'form-control'}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
+            'relacion_afinidad': forms.Select(attrs={'class': 'form-select'}),
+            'participante_familiar': forms.Select(attrs={'class': 'form-select'}),
+        }        
+
 class HijoForm(forms.ModelForm):
     class Meta:
         model = Hijo
@@ -135,6 +151,19 @@ class HijoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(HijoForm, self).__init__(*args, **kwargs)
         self.fields['establecimiento'].required = False
+
+
+
+class HijoExtraForm(forms.ModelForm):
+    class Meta:
+        model = Hijo
+        fields = ['nombre', 'apellido', 'genero', 'edad', 'es_reconocido', 'es_estudiante', 'establecimiento','participante_madre']
+    
+
+    def __init__(self, *args, **kwargs):
+        super(HijoExtraForm, self).__init__(*args, **kwargs)
+        self.fields['establecimiento'].required = False
+
 
 
 
@@ -216,3 +245,16 @@ class IdiomaForm(forms.ModelForm):
         model = Idioma
         fields = ['idioma'] 
 
+
+class SesionForm(forms.ModelForm):
+    class Meta:
+        model = Sesion
+        fields = ['fecha', 'municipio', 'area_atencion', 'actividad', 'resultados','recomendaciones']
+        widgets = {
+            'fecha': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'municipio': forms.Select(attrs={'class': 'form-select'}),
+            'area_atencion': forms.Select(attrs={'class': 'form-select'}),
+            'actividad': forms.Textarea(attrs={'class': 'form-control', 'rows': 10}),
+            'resultados': forms.Textarea(attrs={'class': 'form-control', 'rows': 10}),
+            'recomendaciones': forms.Textarea(attrs={'class': 'form-control', 'rows': 10}),
+        }        

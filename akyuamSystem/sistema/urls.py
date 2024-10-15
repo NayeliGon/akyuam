@@ -13,7 +13,10 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='sistema/login.html'), name='login'),
     path('home/', views.home_view, name='home'),  
+    #Rutas para las sesiones
     path('sesiones/',login_required( views.sesiones_view), name='sesiones'),  
+    path('registrar-sesion/<int:participante_id>/',login_required( views.registrar_sesion_view), name='registrar_sesion'),  
+
     path('emergencias/', login_required(views.emergencias_view), name='emergencias'),  
     path('consulta-asistencia/', login_required(views.consulta_asistencia_view), name='consulta_asistencia'), 
     path('calcular-gastos/', login_required(views.calcular_gastos_view), name='calcular_gastos'),  
@@ -54,4 +57,8 @@ urlpatterns = [
     #Rutas para ver y actualizar Agresores de participantes
     path('lista-agresores/<int:participante_id>/', views.listar_agresores_view, name='lista_agresores'),
     path('agresor-actualizar/<int:agresor_id>/', views.actualizar_agresor_view, name='actualizar_agresor'),
+    #Rutas para registrar hijos extra
+    path('registrar-hijo-extra/', views.registrar_hijo_extra_view, name='registrar_hijo_extra'),
+   # 
+    path('registrar-familiar-extra/', views.registrar_familiar_extra_view, name='registrar_familiar_extra'),
 ]

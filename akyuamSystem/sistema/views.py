@@ -62,10 +62,13 @@ from .models import Idioma
 from .forms import IdiomaForm
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import HijoForm
+from .forms import HijoExtraForm
 from .models import Participante
 from .forms import ReferenciaFamiliarForm
+from .forms import ReferenciaFamiliarExtraForm
 from .forms import HechoForm
 from .forms import AgresorForm
+from .forms import SesionForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash, logout
 from django.shortcuts import redirect
@@ -165,6 +168,36 @@ def registrar_hijo(request, participante_id):
         form = HijoForm()
     
     return render(request, 'sistema/registrar_hijo.html', {'form': form, 'participante': participante})
+
+
+
+#Registrar hijos extra (aparte del que se registra con la partipante al principio)
+
+def registrar_hijo_extra_view(request):
+    if request.method == 'POST':
+        form = HijoExtraForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('registrar_participante')
+    else:
+        form = HijoExtraForm()
+    return render(request, 'sistema/registrar_hijo_extra.html', {'form': form})
+
+
+
+#Registrar familiar extra (aparte del que se registra con la partipante al principio)
+
+def registrar_familiar_extra_view(request):
+    if request.method == 'POST':
+        form = ReferenciaFamiliarExtraForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('registrar_participante')
+    else:
+        form = ReferenciaFamiliarExtraForm()
+    return render(request, 'sistema/registrar_familiar_extra.html', {'form': form})
+
+
 
 
 #Omitir registro de hijos
@@ -280,7 +313,9 @@ def home_view(request):
 def sesiones_view(request):
     grupos_permitidos = ['Administrador', 'Encargado']
     if request.user.groups.filter(name__in=grupos_permitidos).exists():
-     return render(request, 'sistema/registro.html')
+        if request.method == 'GET':
+            participantes = Participante.objects.values('id', 'nombre', 'apellido', 'direccion', 'dpi', 'telefono').order_by('id')
+            return render(request, 'sistema/sesiones_participantes.html',{'participantes':participantes})
     else:
         return render(request, 'sistema/acceso_denegado.html', status=403)
 
@@ -631,3 +666,21 @@ def actualizar_agresor_view(request, agresor_id):
         form = AgresorForm(instance=agresor)
     
     return render(request, 'sistema/actualizar_agresor.html', {'form': form})
+
+
+@login_required
+def registrar_sesion_view(request, participante_id):
+    participante = get_object_or_404(Participante, id=participante_id)
+    
+    if request.method == 'POST':
+        form = SesionForm(request.POST)
+        if form.is_valid():
+            sesion = form.save(commit=False)
+            sesion.participante = participante
+            sesion.save()
+            return redirect('sesiones')
+
+    else:
+        form = SesionForm()
+    
+    return render(request, 'sistema/registrar_sesion_participantes.html', {'form': form})

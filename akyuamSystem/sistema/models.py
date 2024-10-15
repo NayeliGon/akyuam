@@ -223,3 +223,24 @@ class Agresor(models.Model):
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
 
+
+
+class AreaDeAtencion(models.Model):
+    area_atencion = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.area_atencion
+
+
+
+class Sesion(models.Model):
+    fecha = models.DateField()
+    municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE)  
+    area_atencion = models.ForeignKey(AreaDeAtencion, on_delete=models.CASCADE)  
+    actividad = models.TextField()
+    resultados = models.TextField(blank=True, null=True)  # Opcional
+    recomendaciones = models.TextField(blank=True, null=True)  # Opcional
+    participante = models.ForeignKey(Participante, on_delete=models.CASCADE)  
+
+    def __str__(self):
+        return f'Sesión {self.id} - {self.fecha}'
