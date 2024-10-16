@@ -16,6 +16,7 @@ from .models import Hijo
 from .models import Hecho
 from .models import ReferenciaFamiliar
 from .models import Agresor
+from .models import Albergue
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
@@ -74,6 +75,14 @@ from django.contrib.auth import update_session_auth_hash, logout
 from django.shortcuts import redirect
 from django.contrib import messages
 from .forms import CustomPasswordChangeForm
+from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
+from django.db.models import Count
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Participante
+from django.utils import timezone
+from django.db.models import Count, OuterRef, Subquery
+
 
 def change_password(request):
     if request.method == 'POST':
@@ -684,3 +693,64 @@ def registrar_sesion_view(request, participante_id):
         form = SesionForm()
     
     return render(request, 'sistema/registrar_sesion_participantes.html', {'form': form})
+
+
+def buscar_participantes(request):
+    query = request.GET.get('query', '').strip()
+
+    # Obtener el último albergue de cada participante
+    ultimo_albergue = Albergue.objects.filter(participante=OuterRef('pk')).order_by('-fecha_ingreso')
+
+    if query:
+        participantes = Participante.objects.filter(
+            Q(nombre__icontains=query) | 
+            Q(apellido__icontains=query) | 
+            Q(no_expediente__icontains=query)
+        ).annotate(
+            cantidad_hijos=Count('hijo'),
+            hijos_albergue=Subquery(ultimo_albergue.values('cantidad_hijos')[:1]),
+            fecha_ingreso=Subquery(ultimo_albergue.values('fecha_ingreso')[:1]),
+            fecha_salida=Subquery(ultimo_albergue.values('fecha_salida')[:1])
+        )
+    else:
+        participantes = None
+
+    return render(request, 'sistema/albergue.html', {'participantes': participantes})
+
+def ingresar_participante(request, participante_id):
+    participante = get_object_or_404(Participante, id=participante_id)
+
+    if request.method == 'POST':
+        fecha_ingreso = request.POST.get('fecha_ingreso')
+        cantidad_hijos = request.POST.get('cantidad_hijos')
+
+        nuevo_registro = Albergue(
+            participante=participante,
+            fecha_ingreso=fecha_ingreso,
+            cantidad_hijos=cantidad_hijos
+        )
+        nuevo_registro.save()
+
+        return redirect('buscar_participantes') 
+    return render(request, 'sistema/albergue.html', {'participante': participante})
+
+def registrar_salida(request, id_participante):
+
+    participante = get_object_or_404(Participante, id=id_participante)
+
+    if request.method == 'POST':
+
+        fecha_salida = request.POST.get('fecha_salida')
+
+        albergue = get_object_or_404(Albergue, participante=participante)
+
+
+        albergue.fecha_salida = fecha_salida
+        albergue.save()
+
+
+        return redirect('buscar_participantes')  
+
+    return render(request, 'sistema/albergue.html', {'participante': participante})
+
+

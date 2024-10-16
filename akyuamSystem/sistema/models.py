@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
+from django.utils import timezone
 
 
 
@@ -244,3 +245,10 @@ class Sesion(models.Model):
 
     def __str__(self):
         return f'Sesión {self.id} - {self.fecha}'
+    
+
+class Albergue(models.Model):
+    participante = models.ForeignKey(Participante, on_delete=models.CASCADE)
+    fecha_ingreso = models.DateField(default=timezone.now)
+    fecha_salida = models.DateField(null=True, blank=True)
+    cantidad_hijos = models.IntegerField()

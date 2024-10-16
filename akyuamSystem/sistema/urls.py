@@ -59,6 +59,9 @@ urlpatterns = [
     path('agresor-actualizar/<int:agresor_id>/', views.actualizar_agresor_view, name='actualizar_agresor'),
     #Rutas para registrar hijos extra
     path('registrar-hijo-extra/', views.registrar_hijo_extra_view, name='registrar_hijo_extra'),
-   # 
+
     path('registrar-familiar-extra/', views.registrar_familiar_extra_view, name='registrar_familiar_extra'),
+    path('buscar/', views.buscar_participantes, name='buscar_participantes'),
+    path('registrar-salida/<int:id_participante>/', login_required(views.registrar_salida), name='registrar_salida'),
+    path('ingresar/<int:participante_id>/',login_required(views.ingresar_participante), name='ingresar_participante'),
 ]
