@@ -8,6 +8,7 @@ from .views import referenciaFamiliar
 from .views import registrar_hecho
 from .views import registrar_agresor
 from .views import eliminar_usuario
+from .views import buscar_participante_albergue
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -19,7 +20,7 @@ urlpatterns = [
 
     path('emergencias/', login_required(views.emergencias_view), name='emergencias'),  
     path('consulta-asistencia/', login_required(views.consulta_asistencia_view), name='consulta_asistencia'), 
-    path('calcular-gastos/', login_required(views.calcular_gastos_view), name='calcular_gastos'),  
+    path('calcular-gastos/', login_required(buscar_participante_albergue), name='calcular_gastos'),  
     path('administrar-usuarios/', login_required(views.administrar_usuarios_view), name='administrar_usuarios'),  
     path('logout/', views.logout_view, name='logout'),  
     path('boton-emergencia/', views.boton_emergencia_view, name='boton'), 
@@ -61,7 +62,7 @@ urlpatterns = [
     path('registrar-hijo-extra/', views.registrar_hijo_extra_view, name='registrar_hijo_extra'),
 
     path('registrar-familiar-extra/', views.registrar_familiar_extra_view, name='registrar_familiar_extra'),
-    path('buscar/', views.buscar_participantes, name='buscar_participantes'),
+    path('buscar/', views.buscar_participantes, name='buscar_participantes'),                                                                                                                           
     path('registrar-salida/<int:id_participante>/', login_required(views.registrar_salida), name='registrar_salida'),
     path('ingresar/<int:participante_id>/',login_required(views.ingresar_participante), name='ingresar_participante'),
 ]

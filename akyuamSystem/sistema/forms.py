@@ -268,9 +268,10 @@ class BuscarParticipanteForm(forms.Form):
     apellido = forms.CharField(required=False, label='Apellido')
     numero_expediente = forms.CharField(required=False, label='Número de Expediente')        
 
+
 class RegistroAlbergueForm(forms.Form):
-    fecha_ingreso = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date'}),
+    fecha_ingreso = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         label="Fecha de ingreso"
     )
     cantidad_hijos = forms.IntegerField(
@@ -284,6 +285,44 @@ class RegistroAlbergueForm(forms.ModelForm):
         fields = ['participante', 'cantidad_hijos']
 
 class RegistroSalidaForm(forms.ModelForm):
+    fecha_salida = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        label="Fecha y hora de salida"
+    )
+
     class Meta:
         model = Albergue
         fields = ['fecha_salida']
+
+
+class FechaRangoForm(forms.Form):
+    fecha_inicio = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'class': 'form-control',
+            'placeholder': 'Selecciona la fecha de inicio'
+        }),
+        label="Fecha de inicio"
+    )
+    fecha_fin = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'class': 'form-control',
+            'placeholder': 'Selecciona la fecha de fin'
+        }),
+        label="Fecha de fin"
+    )
+    costo_por_comida = forms.DecimalField(
+        max_digits=10, 
+        decimal_places=2,
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Costo por comida'
+        }),
+        label="Costo por comida"
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'  # Aplicar clase Bootstrap a todos los campos

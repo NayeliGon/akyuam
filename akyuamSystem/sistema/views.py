@@ -70,6 +70,7 @@ from .forms import ReferenciaFamiliarExtraForm
 from .forms import HechoForm
 from .forms import AgresorForm
 from .forms import SesionForm
+from .forms import FechaRangoForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash, logout
 from django.shortcuts import redirect
@@ -82,7 +83,43 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Participante
 from django.utils import timezone
 from django.db.models import Count, OuterRef, Subquery
+# views.py
 
+from django.shortcuts import render
+from django.db.models import F, ExpressionWrapper, fields
+from .models import Albergue
+from .forms import FechaRangoForm
+from datetime import timedelta
+
+def buscar_participante_albergue(request):
+    form = FechaRangoForm()
+    resultados = []
+    total_comidas = 0
+    costo_total = 0
+
+    if request.method == 'GET':
+        form = FechaRangoForm(request.GET)
+        if form.is_valid():
+            fecha_inicio = form.cleaned_data['fecha_inicio']
+            fecha_fin = form.cleaned_data['fecha_fin']
+            costo_por_comida = form.cleaned_data['costo_por_comida']
+
+            # Filtrar los resultados en base a las fechas
+            resultados = Albergue.objects.filter(
+                fecha_ingreso__gte=fecha_inicio,
+                fecha_salida__lte=fecha_fin
+            )
+
+            # Calcular el total de comidas (5 comidas por día por cada participante)
+            dias = (fecha_fin - fecha_inicio).days + 1  # +1 para incluir el último día
+            total_comidas = len(resultados) * 5 * dias
+            costo_total = total_comidas * costo_por_comida
+
+    return render(request, 'sistema/calcular_gastos.html', {
+        'form': form,
+        'resultados': resultados,
+        'costo_total': costo_total
+    })
 
 def change_password(request):
     if request.method == 'POST':
@@ -694,7 +731,7 @@ def registrar_sesion_view(request, participante_id):
     
     return render(request, 'sistema/registrar_sesion_participantes.html', {'form': form})
 
-
+@login_required
 def buscar_participantes(request):
     query = request.GET.get('query', '').strip()
 
@@ -716,7 +753,7 @@ def buscar_participantes(request):
         participantes = None
 
     return render(request, 'sistema/albergue.html', {'participantes': participantes})
-
+@login_required
 def ingresar_participante(request, participante_id):
     participante = get_object_or_404(Participante, id=participante_id)
 
@@ -733,7 +770,7 @@ def ingresar_participante(request, participante_id):
 
         return redirect('buscar_participantes') 
     return render(request, 'sistema/albergue.html', {'participante': participante})
-
+@login_required
 def registrar_salida(request, id_participante):
 
     participante = get_object_or_404(Participante, id=id_participante)

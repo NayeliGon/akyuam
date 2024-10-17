@@ -247,8 +247,10 @@ class Sesion(models.Model):
         return f'Sesión {self.id} - {self.fecha}'
     
 
+
+
 class Albergue(models.Model):
     participante = models.ForeignKey(Participante, on_delete=models.CASCADE)
-    fecha_ingreso = models.DateField(default=timezone.now)
-    fecha_salida = models.DateField(null=True, blank=True)
+    fecha_ingreso = models.DateTimeField(default=timezone.now)
+    fecha_salida = models.DateTimeField(null=True, blank=True)
     cantidad_hijos = models.IntegerField()
