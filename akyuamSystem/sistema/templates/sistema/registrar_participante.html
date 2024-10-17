@@ -128,7 +128,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label for="etnia" class="form-label">Etnia</label>
+                        <label for="etnia" class="form-label">Grupo étnico</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-users"></i></span>
                             {{ form.etnia }}
@@ -159,6 +159,8 @@
                     <div class="col-md-4">
                         <label for="lectura_escritura" class="form-label">Sabe Leer/Escribir</label>
                         {{ form.lectura_escritura }}
+                        <br>
+                        {{ form.lectura_escritura.help_text }}
                     </div>
                 </div>
 
@@ -199,6 +201,9 @@
                     <div class="col-md-4">
                         <label for="antecedentes_enfermedad" class="form-label">Antecedentes de Enfermedad</label>
                         {{ form.antecedentes_enfermedad }}
+                        <br>
+                        {{ form.antecedentes_enfermedad.help_text  }}
+                        
                     </div>
                     <div class="col-md-4">
                         <label for="enfermedad" class="form-label">Enfermedad</label>
@@ -214,6 +219,8 @@
                     <div class="col-md-4">
                         <label for="presenta_discapacidad" class="form-label">¿Presenta discapacidad?</label>
                         {{ form.presenta_discapacidad }}
+                        <br>
+                        {{ form.presenta_discapacidad.help_text }}
                     </div>
                     <div class="col-md-4">
                         <label for="discapacidad" class="form-label">Tipo de Discapacidad</label>
@@ -225,6 +232,9 @@
                     <div class="col-md-4">
                         <label for="estado_gestacion" class="form-label">¿Está en estado de gestación?</label>
                         {{ form.estado_gestacion }}
+                        <br>
+                        {{ form.estado_gestacion.help_text }}
+
                     </div>
                 </div>
 
@@ -240,6 +250,8 @@
                     <div class="col-md-4">
                         <label for="dependencia_adictiva" class="form-label">¿Presenta dependencia adictiva?</label>
                         {{ form.dependencia_adictiva }}
+                        <br>
+                        {{ form.dependencia_adictiva.help_text }}
                     </div>
                     <div class="col-md-4">
                         <label for="dependencia" class="form-label">Tipo de Dependencia</label>
@@ -255,6 +267,8 @@
                     <div class="col-md-4">
                         <label for="apoyo_familiar" class="form-label">¿Recibe apoyo familiar?</label>
                         {{ form.apoyo_familiar }}
+                        <br>
+                        {{ form.apoyo_familiar.help_text }}
                     </div>
                     <div class="col-md-4">
                         <label for="escolaridad" class="form-label">Escolaridad</label>
@@ -288,7 +302,7 @@
                
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="idioma" class="form-label">Idioma</label>
+                        <label for="idioma" class="form-label">Idioma/lengua que habla</label>
                         {{ form.idioma }}
                     </div>
                 </div>

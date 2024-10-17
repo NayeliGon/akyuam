@@ -82,6 +82,24 @@ class AgresorForm(forms.ModelForm):
             'observaciones': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super(AgresorForm, self).__init__(*args, **kwargs)
+        self.fields['dpi'].required = False
+        self.fields['actividad_laboral'].required = False
+        self.fields['nombre_lugar_trabajo'].required = False
+        self.fields['direccion_trabajo'].required = False
+        self.fields['telefono_trabajo'].required = False
+        self.fields['ingreso_mensual'].required = False
+        self.fields['otros_bienes'].required = False
+        self.fields['tipo_antecedente_conflic'].required = False
+        self.fields['otros_antecedentes_conflic'].required = False
+        self.fields['descripcion_enfermedad'].required = False
+        self.fields['dependencia'].required = False
+        self.fields['otras_dependencias'].required = False
+        self.fields['descripcion_armas'].required = False
+        self.fields['referencias_personales'].required = False
+        self.fields['observaciones'].required = False
+
 class HechoForm(forms.ModelForm):
     class Meta:
         model = Hecho
@@ -150,6 +168,14 @@ class HijoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(HijoForm, self).__init__(*args, **kwargs)
+
+        checkbox_fields = [
+            'es_reconocido', 'es_estudiante'
+        ]
+
+        for field in checkbox_fields:
+            self.fields[field].help_text = 'Marque si la respuesta es "Sí".'
+
         self.fields['establecimiento'].required = False
 
 
@@ -214,10 +240,20 @@ class ParticipanteForm(forms.ModelForm):
             'idioma': forms.Select(attrs={'class': 'form-select'}),
             'religion': forms.Select(attrs={'class': 'form-select'}),
         }
+        
 
      # Modificando campos para que sean opcionales
     def __init__(self, *args, **kwargs):
         super(ParticipanteForm, self).__init__(*args, **kwargs)
+        checkbox_fields = [
+            'lectura_escritura', 'antecedentes_enfermedad', 'presenta_discapacidad', 
+            'estado_gestacion', 'dependencia_adictiva', 'apoyo_familiar'
+        ]
+
+        for field in checkbox_fields:
+            self.fields[field].help_text = 'Marque si la respuesta es "Sí".'
+
+        self.fields['dpi'].required = False
         self.fields['profesion'].required = False
         self.fields['ocupacion'].required = False
         self.fields['direccion_trabajo'].required = False
@@ -233,13 +269,7 @@ class ParticipanteForm(forms.ModelForm):
         if 'hora_ingreso' not in self.initial:
             self.fields['hora_ingreso'].initial = timezone.now().strftime('%H:%M')
 
-    '''        
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if 'hora_ingreso' not in self.initial:
-            self.fields['hora_ingreso'].initial = timezone.now().strftime('%H:%M')
-
-    '''
+   
 class IdiomaForm(forms.ModelForm):
     class Meta:
         model = Idioma

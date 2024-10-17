@@ -16,6 +16,7 @@ from .models import Hijo
 from .models import Hecho
 from .models import ReferenciaFamiliar
 from .models import Agresor
+from .models import Sesion
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
@@ -119,7 +120,7 @@ def perfil_view(request):
     return render(request, 'sistema/perfil.html', {'form': form, 'password_form': password_form})
 
 
-
+@login_required
 def albergue_view(request):
     
     return render(request, 'sistema/albergue.html')
@@ -668,6 +669,7 @@ def actualizar_agresor_view(request, agresor_id):
     return render(request, 'sistema/actualizar_agresor.html', {'form': form})
 
 
+#Regitrar sesion de una participante
 @login_required
 def registrar_sesion_view(request, participante_id):
     participante = get_object_or_404(Participante, id=participante_id)
@@ -683,4 +685,33 @@ def registrar_sesion_view(request, participante_id):
     else:
         form = SesionForm()
     
-    return render(request, 'sistema/registrar_sesion_participantes.html', {'form': form})
+    return render(request, 'sistema/registrar_sesion_participantes.html', {'form': form, 'participante': participante})
+
+
+#Listar todas las sesiones de una participante en específico
+
+@login_required
+def lista_sesiones_view(request, participante_id):
+    participante_obtenida = get_object_or_404(Participante, id=participante_id)
+
+    sesiones = Sesion.objects.filter(participante=participante_obtenida)
+    
+    return render(request, 'sistema/lista-sesiones.html', {'sesiones': sesiones})
+
+
+
+@login_required
+def actualizar_sesion_view(request, sesion_id):
+    sesion = Sesion.objects.get(id=sesion_id)
+    
+    if request.method == 'POST':
+        form = SesionForm(request.POST, instance=sesion)
+        if form.is_valid():
+            sesion = form.save(commit=False)
+            sesion.save()
+            return redirect('sesiones')
+
+    else:
+        form = SesionForm(instance=sesion)
+    
+    return render(request, 'sistema/actualizar_sesion.html', {'form': form})

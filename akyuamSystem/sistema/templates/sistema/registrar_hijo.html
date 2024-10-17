@@ -47,7 +47,7 @@
                         <th>¿Es Reconocido?</th>
                         <th>¿Es Estudiante?</th>
                         <th>Establecimiento</th>
-                        <th>Acciones</th>
+                       
                     </tr>
                 </thead>
                 <tbody>
@@ -75,9 +75,14 @@
                         </td>
                         <td>
                             {{ form.es_reconocido }}
+                            <br>
+                            {{ form.es_reconocido.help_text }}
                         </td>
                         <td>
                             {{ form.es_estudiante }}
+                            <br>
+                            {{ form.es_estudiante.help_text }}
+
                         </td>
                         <td>
                             <div class="input-group">
@@ -85,13 +90,11 @@
                                 {{ form.establecimiento }}
                             </div>
                         </td>
-                        <td>
-                            <button type="button" class="btn btn-danger" onclick="removeRow(this)"><i class="fas fa-trash"></i></button>
-                        </td>
+                        
                     </tr>
                 </tbody>
             </table>
-            <button type="button" class="btn btn-secondary mb-3" onclick="addRow()">Agregar Hijo</button>
+           <!-- <button type="button" class="btn btn-secondary mb-3" onclick="addRow()">Agregar Hijo</button> -->
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
 

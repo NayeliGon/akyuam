@@ -15,7 +15,9 @@ urlpatterns = [
     path('home/', views.home_view, name='home'),  
     #Rutas para las sesiones
     path('sesiones/',login_required( views.sesiones_view), name='sesiones'),  
-    path('registrar-sesion/<int:participante_id>/',login_required( views.registrar_sesion_view), name='registrar_sesion'),  
+    path('registrar-sesion/<int:participante_id>/',login_required( views.registrar_sesion_view), name='registrar_sesion'), 
+    path('lista-sesiones/<int:participante_id>/',login_required( views.lista_sesiones_view), name='lista_sesiones'), 
+    path('actualizar-sesion/<int:sesion_id>/',login_required( views.actualizar_sesion_view), name='actualizar_sesion'), 
 
     path('emergencias/', login_required(views.emergencias_view), name='emergencias'),  
     path('consulta-asistencia/', login_required(views.consulta_asistencia_view), name='consulta_asistencia'), 

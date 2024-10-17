@@ -115,7 +115,7 @@ class Participante(models.Model):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     telefono = models.CharField(max_length=15)
-    dpi = models.CharField(max_length=20)
+    dpi = models.CharField(max_length=20,null=True, blank=True)
     fecha_nacimiento = models.DateField(null=True, blank=True)  # Opcional
     direccion = models.CharField(max_length=100, null=True, blank=True)  # Opcional
     lectura_escritura = models.BooleanField(default=False)  # Valor por defecto
@@ -189,7 +189,7 @@ class Agresor(models.Model):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     telefono = models.CharField(max_length=15)
-    dpi = models.CharField(max_length=20)
+    dpi = models.CharField(max_length=20, null=True, blank=True)
     etnia = models.ForeignKey(Etnia, on_delete=models.CASCADE)
     municipio_nacimiento = models.ForeignKey(Municipio, related_name='nacimiento_agresor', on_delete=models.CASCADE)
     caracteristicas_fisicas = models.TextField()
