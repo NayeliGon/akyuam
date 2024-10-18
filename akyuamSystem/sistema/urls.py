@@ -10,6 +10,7 @@ from .views import registrar_agresor
 from .views import eliminar_usuario
 from .views import buscar_participante_albergue
 from django.contrib.auth import views as auth_views
+from .views import participante_pdf
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='sistema/login.html'), name='login'),
@@ -17,7 +18,7 @@ urlpatterns = [
     #Rutas para las sesiones
     path('sesiones/',login_required( views.sesiones_view), name='sesiones'),  
     path('registrar-sesion/<int:participante_id>/',login_required( views.registrar_sesion_view), name='registrar_sesion'),  
-
+    path('participante/<int:participante_id>/pdf/', participante_pdf, name='participante_pdf'),
     path('emergencias/', login_required(views.emergencias_view), name='emergencias'),  
     path('consulta-asistencia/', login_required(views.consulta_asistencia_view), name='consulta_asistencia'), 
     path('calcular-gastos/', login_required(buscar_participante_albergue), name='calcular_gastos'),  
