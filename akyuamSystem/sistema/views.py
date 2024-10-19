@@ -72,6 +72,7 @@ from .forms import HechoForm
 from .forms import AgresorForm
 from .forms import SesionForm
 from .forms import FechaRangoForm
+from .forms import FechaRangoAsistenciaForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash, logout
 from django.shortcuts import redirect
@@ -92,6 +93,45 @@ from .models import Albergue
 from .forms import FechaRangoForm
 from datetime import timedelta
 
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from .models import Participante
+
+# Función para convertir HTML a PDF
+def render_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    result = HttpResponse(content_type='application/pdf')
+    pdf = pisa.CreatePDF(html, dest=result)
+    if not pdf.err:
+        return result
+    return None
+
+# Vista para generar el PDF
+def participante_pdf(request, participante_id):
+    participante = get_object_or_404(Participante, id=participante_id)
+    hijos = participante.hijo_set.all()
+    referencias = participante.referenciafamiliar_set.all()
+    hechos = participante.hecho_set.all()
+    agresor = participante.agresor_set.first()
+
+    context = {
+        'participante': participante,
+        'hijos': hijos,
+        'referencias': referencias,
+        'hechos': hechos,
+        'agresor': agresor,
+    }
+    
+    pdf = render_to_pdf('sistema/participante_pdf.html', context)
+    if pdf:
+        return HttpResponse(pdf, content_type='application/pdf')
+    return HttpResponse("Error al generar el PDF", status=400)
+
+
+
 def buscar_participante_albergue(request):
     form = FechaRangoForm()
     resultados = []
@@ -111,16 +151,25 @@ def buscar_participante_albergue(request):
                 fecha_salida__lte=fecha_fin
             )
 
-            # Calcular el total de comidas (5 comidas por día por cada participante)
-            dias = (fecha_fin - fecha_inicio).days + 1  # +1 para incluir el último día
-            total_comidas = len(resultados) * 5 * dias
-            costo_total = total_comidas * costo_por_comida
+            for resultado in resultados:
+                # Calcular el número de días en el albergue
+                resultado.dias_en_albergue = (resultado.fecha_salida - resultado.fecha_ingreso).days + 1
+
+                # Calcular la cantidad de personas (participante + hijos)
+                total_personas = 1 + resultado.cantidad_hijos  # 1 por la participante
+
+                # Calcular el costo total para la participante y sus hijos
+                resultado.costo_gastado = resultado.dias_en_albergue * 5 * total_personas * costo_por_comida
+
+            # Sumar los costos de todos los resultados
+            costo_total = sum([res.costo_gastado for res in resultados])
 
     return render(request, 'sistema/calcular_gastos.html', {
         'form': form,
         'resultados': resultados,
         'costo_total': costo_total
     })
+
 
 def change_password(request):
     if request.method == 'POST':
@@ -366,13 +415,75 @@ def sesiones_view(request):
     else:
         return render(request, 'sistema/acceso_denegado.html', status=403)
 
+
+
+
 @login_required
 def consulta_asistencia_view(request):
     grupos_permitidos = ['Administrador', 'Encargado']
-    if request.user.groups.filter(name__in=grupos_permitidos).exists():
-     return render(request, 'sistema/consulta_asistencia.html')
-    else:
+
+    # Verificar si el usuario pertenece a los grupos permitidos
+    if not request.user.groups.filter(name__in=grupos_permitidos).exists():
         return render(request, 'sistema/acceso_denegado.html', status=403)
+
+    participantes = []  # Inicializa la lista vacía para evitar mostrar participantes inicialmente
+
+    search = request.POST.get('search', '')
+
+    if request.method == 'POST' and search:
+        # Si se realiza una búsqueda, filtra los participantes
+        participantes = Participante.objects.filter(
+            nombre__icontains=search
+        ) | Participante.objects.filter(apellido__icontains=search)
+
+    # Preparar el contexto para renderizar la vista
+    context = {'participantes': participantes}
+
+    # Renderizar la plantilla con el contexto
+    return render(request, 'sistema/calcular_asistencias.html', context)
+
+    
+@login_required
+def fecha_asistencia_view(request,participante_id):
+    participante_obtenida = get_object_or_404(Participante, id=participante_id)
+
+    form = FechaRangoAsistenciaForm()
+    resultados = []
+    total_resultados = 0
+    
+
+    if request.method == 'GET':
+        form = FechaRangoAsistenciaForm(request.GET)
+        if form.is_valid():
+            fecha_inicio = form.cleaned_data['fecha_inicio']
+            fecha_fin = form.cleaned_data['fecha_fin']
+            
+            
+            # Filtrar los resultados en base a las fechas
+            resultados = Sesion.objects.filter(
+            fecha__gte=fecha_inicio,  # Fecha mayor o igual a la de inicio
+            fecha__lte=fecha_fin,      # Fecha menor o igual a la de fin
+            participante=participante_obtenida 
+            )
+
+            total_resultados = resultados.count()
+
+    context = {
+        'form': form,
+        'resultados': resultados,
+        'participante': participante_obtenida,
+        'total_resultados': total_resultados
+    }
+    
+    return render(request, 'sistema/calcular_asistencias2.html', context)
+
+
+
+
+
+
+
+
     
 @login_required
 def calcular_gastos_view(request):

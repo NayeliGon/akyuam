@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reporte de Participante</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <img src="logo_izquierdo.png" alt="Logo Izquierdo" style="width: 100px;">
+        
+        <div style="text-align: center;">
+            <h1 style="font-weight: bold; margin: 10px 0;">CENTRO DE APOYO INTEGRAL</h1>
+            <h1 style="font-weight: bold; margin: 10px 0;">PARA MUJERES SOBREVIVIENTES DE VIOLENCIA</h1>
+            <h1 style="margin: 10px 0;"><i>"AK' YU'AM"</i></h1>
+            <h1 style="font-weight: bold; margin: 10px 0;">ENTREVISTA A USUARIA</h1>
+        </div>
+        
+        <img src="logo_derecho.png" alt="Logo Derecho" style="width: 100px;">
+    </div>
+    
+    <div class="container">
+
+        <div class="grid-container">
+            <p><strong>No. Expediente:</strong> {{ participante.no_expediente }}</p>
+            <p><strong>Nombre:</strong> {{ participante.nombre }} {{ participante.apellido }}</p>
+            <p><strong>Teléfono:</strong> {{ participante.telefono }}</p>
+            
+            <p><strong>DPI:</strong> {{ participante.dpi }}</p>
+            <p><strong>Fecha de Nacimiento:</strong> {{ participante.fecha_nacimiento }}</p>
+            <p><strong>Dirección:</strong> {{ participante.direccion }}</p>
+            
+            <p><strong>Municipio de Dirección:</strong> {{ participante.municipio_direccion }}</p>
+            <p><strong>Estado Civil:</strong> {{ participante.estado_civil }}</p>
+            <p><strong>Etnia:</strong> {{ participante.etnia }}</p>
+            
+            <p><strong>Municipio de Nacimiento:</strong> {{ participante.municipio_nacimiento }}</p>
+            <p><strong>Relación de Afinidad:</strong> {{ participante.relacion_afinidad }}</p>
+            <p><strong>Idioma:</strong> {{ participante.idioma }}</p>
+            
+            <p><strong>Religión:</strong> {{ participante.religion }}</p>
+            {% if participante.referente %}
+                <p><strong>Referente:</strong> {{ participante.referente }}</p>
+            {% endif %}
+            {% if participante.hora_ingreso %}
+                <p><strong>Hora de Ingreso:</strong> {{ participante.hora_ingreso }}</p>
+            {% endif %}
+            
+            {% if participante.profession %}
+                <p><strong>Profesión:</strong> {{ participante.profesion }}</p>
+            {% endif %}
+            {% if participante.ocupacion %}
+                <p><strong>Ocupación:</strong> {{ participante.ocupacion }}</p>
+            {% endif %}
+            {% if participante.direccion_trabajo %}
+                <p><strong>Dirección de Trabajo:</strong> {{ participante.direccion_trabajo }}</p>
+            {% endif %}
+            
+            {% if participante.telefono_trabajo %}
+                <p><strong>Teléfono de Trabajo:</strong> {{ participante.telefono_trabajo }}</p>
+            {% endif %}
+            <p><strong>¿Antecedentes de Enfermedad?</strong> {{ participante.antecedentes_enfermedad|yesno:"Sí,No" }}</p>
+            {% if participante.enfermedad %}
+                <p><strong>Enfermedad:</strong> {{ participante.enfermedad }}</p>
+            {% endif %}
+            
+            <p><strong>¿Presenta Discapacidad?</strong> {{ participante.presenta_discapacidad|yesno:"Sí,No" }}</p>
+            {% if participante.discapacidad %}
+                <p><strong>Discapacidad:</strong> {{ participante.discapacidad }}</p>
+            {% endif %}
+            
+            <p><strong>¿Está en Estado de Gestación?</strong> {{ participante.estado_gestacion|yesno:"Sí,No" }}</p>
+            {% if participante.tiempo_gestacion %}
+                <p><strong>Tiempo de Gestación:</strong> {{ participante.tiempo_gestacion }}</p>
+            {% endif %}
+            
+            <p><strong>¿Dependencia Adictiva?</strong> {{ participante.dependencia_adictiva|yesno:"Sí,No" }}</p>
+            {% if participante.dependencia %}
+                <p><strong>Dependencia:</strong> {{ participante.dependencia }}</p>
+            {% endif %}
+            
+            <p><strong>¿Recibe Apoyo Familiar?</strong> {{ participante.apoyo_familiar|yesno:"Sí,No" }}</p>
+            <p><strong>Escolaridad:</strong> {{ participante.escolaridad }}</p>
+            <p><strong>Estado de Vivienda:</strong> {{ participante.estado_vivienda }}</p>
+        </div>
+
+    </div>
+
+    
+    <h2>Información de los Hijos</h2>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Género</th>
+            <th>Edad</th>
+            <th>Estudiante</th>
+        </tr>
+        {% for hijo in hijos %}
+        <tr>
+            <td>{{ hijo.nombre }} {{ hijo.apellido }}</td>
+            <td>{{ hijo.genero }}</td>
+            <td>{{ hijo.edad }}</td>
+            <td>{{ hijo.es_estudiante|yesno:"Sí,No" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <h2>Referencias Familiares</h2>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Relación</th>
+            <th>Teléfono</th>
+        </tr>
+        {% for referencia in referencias %}
+        <tr>
+            <td>{{ referencia.nombre }} {{ referencia.apellido }}</td>
+            <td>{{ referencia.relacion_afinidad }}</td>
+            <td>{{ referencia.telefono }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <h2>Hechos Reportados</h2>
+    <table>
+        <tr>
+            <th>Fecha</th>
+            <th>Tipo de Violencia</th>
+            <th>Descripción</th>
+        </tr>
+        {% for hecho in hechos %}
+        <tr>
+            <td>{{ hecho.fecha }}</td>
+            <td>{{ hecho.tipo_violencia }}</td>
+            <td>{{ hecho.descripcion_hecho }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Información del Agresor</h2>
+    {% if agresor %}
+    <p>Nombre: {{ agresor.nombre }} {{ agresor.apellido }}</p>
+    <p>Teléfono: {{ agresor.telefono }}</p>
+    <p>DPI: {{ agresor.dpi }}</p>
+    <p>Dirección: {{ agresor.direccion }}</p>
+    <p>Descripción Física: {{ agresor.caracteristicas_fisicas }}</p>
+    {% else %}
+    <p>No hay información del agresor.</p>
+    {% endif %}
+</body>
+</html>

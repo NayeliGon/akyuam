@@ -324,7 +324,6 @@ class RegistroSalidaForm(forms.ModelForm):
         model = Albergue
         fields = ['fecha_salida']
 
-
 class FechaRangoForm(forms.Form):
     fecha_inicio = forms.DateField(
         widget=forms.DateInput(attrs={
@@ -332,7 +331,8 @@ class FechaRangoForm(forms.Form):
             'class': 'form-control',
             'placeholder': 'Selecciona la fecha de inicio'
         }),
-        label="Fecha de inicio"
+        label="Fecha de inicio",
+        error_messages={'required': 'Por favor, selecciona una fecha de inicio.'}
     )
     fecha_fin = forms.DateField(
         widget=forms.DateInput(attrs={
@@ -340,7 +340,8 @@ class FechaRangoForm(forms.Form):
             'class': 'form-control',
             'placeholder': 'Selecciona la fecha de fin'
         }),
-        label="Fecha de fin"
+        label="Fecha de fin",
+        error_messages={'required': 'Por favor, selecciona una fecha de fin.'}
     )
     costo_por_comida = forms.DecimalField(
         max_digits=10, 
@@ -349,10 +350,28 @@ class FechaRangoForm(forms.Form):
             'class': 'form-control',
             'placeholder': 'Costo por comida'
         }),
-        label="Costo por comida"
+        label="Costo por comida",
+        error_messages={'required': 'Por favor, ingresa el costo por comida.'}
     )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs['class'] = 'form-control'  # Aplicar clase Bootstrap a todos los campos
+
+class FechaRangoAsistenciaForm(forms.Form):
+    fecha_inicio = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'class': 'form-control',
+            'placeholder': 'Selecciona la fecha de inicio'
+        }),
+        label="Fecha de inicio",
+        error_messages={'required': 'Por favor, selecciona una fecha de inicio.'}
+    )
+    fecha_fin = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'class': 'form-control',
+            'placeholder': 'Selecciona la fecha de fin'
+        }),
+        label="Fecha de fin",
+        error_messages={'required': 'Por favor, selecciona una fecha de fin.'}
+    )
+    
