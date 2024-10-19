@@ -6,6 +6,7 @@ from .models import ReferenciaFamiliar
 from .models import Hecho
 from .models import Agresor
 from .models import Sesion
+from .models import Albergue
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
@@ -287,4 +288,90 @@ class SesionForm(forms.ModelForm):
             'actividad': forms.Textarea(attrs={'class': 'form-control', 'rows': 10}),
             'resultados': forms.Textarea(attrs={'class': 'form-control', 'rows': 10}),
             'recomendaciones': forms.Textarea(attrs={'class': 'form-control', 'rows': 10}),
-        }        
+        }
+
+class BusquedaForm(forms.Form):
+    query = forms.CharField(label='Buscar', max_length=100, required=True)
+
+class BuscarParticipanteForm(forms.Form):
+    nombre = forms.CharField(required=False, label='Nombre')
+    apellido = forms.CharField(required=False, label='Apellido')
+    numero_expediente = forms.CharField(required=False, label='Número de Expediente')        
+
+
+class RegistroAlbergueForm(forms.Form):
+    fecha_ingreso = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        label="Fecha de ingreso"
+    )
+    cantidad_hijos = forms.IntegerField(
+        min_value=0,
+        label="Cantidad de hijos"
+    )
+
+class RegistroAlbergueForm(forms.ModelForm):
+    class Meta:
+        model = Albergue
+        fields = ['participante', 'cantidad_hijos']
+
+class RegistroSalidaForm(forms.ModelForm):
+    fecha_salida = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        label="Fecha y hora de salida"
+    )
+
+    class Meta:
+        model = Albergue
+        fields = ['fecha_salida']
+
+class FechaRangoForm(forms.Form):
+    fecha_inicio = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'class': 'form-control',
+            'placeholder': 'Selecciona la fecha de inicio'
+        }),
+        label="Fecha de inicio",
+        error_messages={'required': 'Por favor, selecciona una fecha de inicio.'}
+    )
+    fecha_fin = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'class': 'form-control',
+            'placeholder': 'Selecciona la fecha de fin'
+        }),
+        label="Fecha de fin",
+        error_messages={'required': 'Por favor, selecciona una fecha de fin.'}
+    )
+    costo_por_comida = forms.DecimalField(
+        max_digits=10, 
+        decimal_places=2,
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Costo por comida'
+        }),
+        label="Costo por comida",
+        error_messages={'required': 'Por favor, ingresa el costo por comida.'}
+    )
+
+
+class FechaRangoAsistenciaForm(forms.Form):
+    fecha_inicio = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'class': 'form-control',
+            'placeholder': 'Selecciona la fecha de inicio'
+        }),
+        label="Fecha de inicio",
+        error_messages={'required': 'Por favor, selecciona una fecha de inicio.'}
+    )
+    fecha_fin = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'class': 'form-control',
+            'placeholder': 'Selecciona la fecha de fin'
+        }),
+        label="Fecha de fin",
+        error_messages={'required': 'Por favor, selecciona una fecha de fin.'}
+    )
+    

@@ -1,11 +1,190 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Búsqueda de Participantes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .table thead th {
+            background-color: #343a40;
+            color: white;
+        }
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .btn-custom {
+            background-color: #5a4d82;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #7b477e;
+            color: white;
+        }
+        .navbar-custom {
+            background-color: #741e78; 
+          
+        }
+        .navbar-custom .navbar-brand {
+            color: white;
+        }
+    </style>
+
 </head>
+
 <body>
-    <h1>Albergue</h1>
+
+<!-- Barra de navegación -->
+<nav class="navbar navbar-custom mb-4">
+    <a href="{% url 'home' %}" class="navbar-brand">
+        <i class="fas fa-home"></i> Inicio
+    </a>
+</nav>
+
+
+<div class="container">
+    <h1 class="mb-4">Búsqueda de Participantes</h1>
+
+    <!-- Formulario de búsqueda -->
+    <form method="GET" action="{% url 'buscar_participantes' %}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="query" class="form-control" placeholder="Buscar por nombre, apellido o número de expediente" aria-label="Buscar">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
+            </div>
+        </div>
+    </form>
+
+    {% if participantes %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>No. Expediente</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Total Hijos</th>
+                <th>Hijos en Albergue</th>
+                <th>Ingreso</th>
+                <th>Salida</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for participante in participantes %}
+            <tr>
+                <td>{{ participante.id }}</td>
+                <td>{{ participante.no_expediente }}</td>
+                <td>{{ participante.nombre }}</td>
+                <td>{{ participante.apellido }}</td>
+                <td>{{ participante.cantidad_hijos }}</td>
+                <td>
+                    {{ participante.hijos_albergue}}
+                </td>
+                <td>
+                    {{ participante.fecha_ingreso|date:"d/m/Y" }}
+                </td>
+                <td>
+                    {{ participante.fecha_salida|date:"d/m/Y" }}
+                </td>
+                
+
+                <td>
+                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalIngreso{{ participante.id }}">Ingresar</button>
+                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#salidaModal{{ participante.id }}">Dar Salida</button>
+                </td>
+
+                    <!-- Modal para Registrar Ingreso -->
+                    <div class="modal fade" id="modalIngreso{{ participante.id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Registrar Ingreso</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="post" action="{% url 'ingresar_participante' participante.id %}">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="fecha_ingreso">Fecha de Ingreso</label>
+                                            <input type="date" class="form-control" id="fecha_ingreso" name="fecha_ingreso" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cantidad_hijos">Cantidad de Hijos</label>
+                                            <input type="number" class="form-control" id="cantidad_hijos" name="cantidad_hijos" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+<!-- Modal para registrar salida -->
+                <div class="modal fade" id="salidaModal{{ participante.id }}" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Registrar Salida</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form method="post" action="{% url 'registrar_salida' participante.id %}">
+                                {% csrf_token %}
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="fecha_salida">Fecha de Salida</label>
+                                        <input type="date" class="form-control" id="fecha_salida" name="fecha_salida" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </form>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        No se encontraron participantes.
+    </div>
+    {% endif %}
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
