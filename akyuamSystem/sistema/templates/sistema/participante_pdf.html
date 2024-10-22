@@ -50,7 +50,7 @@
     <div style="display: table; width: 100%; max-width: 800px; margin: auto;">
         <div style="display: table-row;">
             <div style="display: table-cell; text-align: left;">
-                <img src="https://marketplace.canva.com/EAFaFUz4aKo/2/0/1600w/canva-yellow-abstract-cooking-fire-free-logo-JmYWTjUsE-Q.jpg" alt="Logo Izquierdo" style="width: 100px;">
+                <img src="" alt="Logo Izquierdo" style="width: 100px;">
             </div>
             <div style="display: table-cell; text-align: center;">
                 <h1 class="titulo">CENTRO DE APOYO INTEGRAL</h1>
@@ -148,7 +148,7 @@
     
 
     <h2 class="titulo">DATOS FAMILIARES</h2>
-    {% if hijo %}
+    
     <table>
         <tr>
             <th>No.</th>
@@ -169,13 +169,13 @@
         </tr>
         {% endfor %}
     </table>
-    {% else %}
-    <p>No hay información de hijos</p>
-    {% endif %}
+    
+    <!--<p>No hay información de hijos</p>-->
+    
 
 
     <h2 class="titulo">Referencias Familiares o Personales</h2>
-    {% if ReferenciaFamiliar %}
+    
     <p><strong>¿Recibe Apoyo Familiar?</strong> {{ participante.apoyo_familiar|yesno:"Sí,No" }}</p>
     
     <table>
@@ -194,12 +194,10 @@
         </tr>
         {% endfor %}
     </table>
-    {% else %}
-    <p>No hay información de familiares o referencias</p>
-    {% endif %}
+    
     
     <h2 class="titulo">Hechos Reportados</h2>
-    {% if hecho %}
+   
     <table>
         <tr>
             <th>Fecha</th>
@@ -218,9 +216,7 @@
         <p>Institución y lugar:  {{ hecho.institucion_denuncia }}</p>
         
     </table>
-    {% else %}
-    <p>No hay información del Hecho</p>
-    {% endif %}
+    
     
     <h2 class="titulo">Información del Agresor</h2>
     {% if agresor %}

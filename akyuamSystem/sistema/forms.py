@@ -189,6 +189,14 @@ class HijoExtraForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(HijoExtraForm, self).__init__(*args, **kwargs)
+
+        checkbox_fields = [
+            'es_reconocido', 'es_estudiante'
+        ]
+
+        for field in checkbox_fields:
+            self.fields[field].help_text = 'Marque si la respuesta es "Sí".'
+
         self.fields['establecimiento'].required = False
 
 
@@ -215,7 +223,7 @@ class ParticipanteForm(forms.ModelForm):
             'apellido': forms.TextInput(attrs={'class': 'form-control'}),
             'telefono': forms.TextInput(attrs={'class': 'form-control'}),
             'dpi': forms.TextInput(attrs={'class': 'form-control'}),
-            'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control datepicker'}),
+            'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control','type': 'date'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control'}),
             'lectura_escritura': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'profesion': forms.TextInput(attrs={'class': 'form-control'}),

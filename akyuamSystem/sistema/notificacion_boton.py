@@ -18,6 +18,6 @@ def enviar_mensaje(nombre,apellido,direccion, telefono):
 
     message = client.messages.create(
         body=f"{nombre} {apellido} está sufriendo violencia intrafamiliar, su dirección es {direccion}, y su número de telefono es {telefono}",
-        from_="+18647272971",
-        to="+50236313786",
+        from_="+15306658627",
+        to="+50257801201",
     )

@@ -110,6 +110,7 @@ def render_to_pdf(template_src, context_dict={}):
     return None
 
 # Vista para generar el PDF
+@login_required
 def participante_pdf(request, participante_id):
     participante = get_object_or_404(Participante, id=participante_id)
     hijos = participante.hijo_set.all()
@@ -131,8 +132,13 @@ def participante_pdf(request, participante_id):
     return HttpResponse("Error al generar el PDF", status=400)
 
 
-
+@login_required
 def buscar_participante_albergue(request):
+    grupos_permitidos = ['Administrador']
+
+    # Verificar si el usuario pertenece a los grupos permitidos
+    if not request.user.groups.filter(name__in=grupos_permitidos).exists():
+        return render(request, 'sistema/acceso_denegado.html', status=403)
     form = FechaRangoForm()
     resultados = []
     total_comidas = 0
@@ -170,7 +176,7 @@ def buscar_participante_albergue(request):
         'costo_total': costo_total
     })
 
-
+@login_required
 def change_password(request):
     if request.method == 'POST':
         form = CustomPasswordChangeForm(request.user, request.POST)
@@ -220,7 +226,7 @@ def albergue_view(request):
     
     return render(request, 'sistema/albergue.html')
 
-
+@login_required
 def registrar_idioma(request):
     if request.method == 'POST':
         form = IdiomaForm(request.POST)
@@ -235,8 +241,13 @@ def registrar_idioma(request):
     }
     return render(request, 'sistema/registrar_idioma.html', context)
 
-
+@login_required
 def registrar_participante(request):
+    grupos_permitidos = ['Administrador', 'Recepcion']
+
+    # Verificar si el usuario pertenece a los grupos permitidos
+    if not request.user.groups.filter(name__in=grupos_permitidos).exists():
+        return render(request, 'sistema/acceso_denegado.html', status=403)
     if request.method == 'POST':
         form = ParticipanteForm(request.POST)
         if form.is_valid():
@@ -247,7 +258,7 @@ def registrar_participante(request):
         form = ParticipanteForm()
     return render(request, 'sistema/registrar_participante.html', {'form': form})
 
-
+@login_required
 def registrar_hijo(request, participante_id):
     participante = get_object_or_404(Participante, id=participante_id)
     
@@ -268,7 +279,7 @@ def registrar_hijo(request, participante_id):
 
 
 #Registrar hijos extra (aparte del que se registra con la partipante al principio)
-
+@login_required
 def registrar_hijo_extra_view(request):
     if request.method == 'POST':
         form = HijoExtraForm(request.POST)
@@ -282,7 +293,7 @@ def registrar_hijo_extra_view(request):
 
 
 #Registrar familiar extra (aparte del que se registra con la partipante al principio)
-
+@login_required
 def registrar_familiar_extra_view(request):
     if request.method == 'POST':
         form = ReferenciaFamiliarExtraForm(request.POST)
@@ -297,6 +308,7 @@ def registrar_familiar_extra_view(request):
 
 
 #Omitir registro de hijos
+@login_required
 def no_registrar_hijo(request, participante_id):
     participante = get_object_or_404(Participante, id=participante_id)
     
@@ -306,7 +318,6 @@ def no_registrar_hijo(request, participante_id):
 
 
 @login_required
-
 def referenciaFamiliar(request, participante_id):
     participante = get_object_or_404(Participante, id=participante_id)
     
@@ -325,7 +336,7 @@ def referenciaFamiliar(request, participante_id):
 
 
 
-
+@login_required
 def omitir_referenciaFamiliar(request, participante_id):
     participante = get_object_or_404(Participante, id=participante_id)
     
@@ -369,6 +380,7 @@ def login_view(request):
 
     return render(request, 'sistema/login.html')
 
+@login_required
 def registrar_hecho(request, participante_id):
     participante = get_object_or_404(Participante, id=participante_id)
 
@@ -590,6 +602,7 @@ def administrar_usuarios_view(request):
 
     return render(request, 'sistema/administrar_usuarios.html', {'usuarios': usuarios, 'user_to_edit': user_to_edit})
 
+@login_required
 def eliminar_usuario(request, user_id):
     grupos_permitidos = ['Administrador']
     if not request.user.groups.filter(name__in=grupos_permitidos).exists():
@@ -610,6 +623,8 @@ def emergencias_view(request):
     else:
         return render(request, 'sistema/acceso_denegado.html', status=403)
 
+
+
 def boton_emergencia_view(request):
     return render(request, 'sistema/boton_emergencia.html')
 
@@ -626,6 +641,7 @@ def logout_view(request):
 
 
 #Vista para manejar el envío de datos del boton de emergencia
+
 
 def envio_boton_view(request):
     if request.method == 'POST':
