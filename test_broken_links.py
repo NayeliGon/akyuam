@@ -1,10 +1,12 @@
-from django.urls import reverse, get_resolver
+from unittest.mock import patch
 from django.test import TestCase
+from django.urls import reverse, get_resolver
 
 class BrokenLinksTest(TestCase):
+    @patch.dict('sys.modules', {'twilio': None})  # Mockea twilio como None
     def test_urls(self):
         resolver = get_resolver()
-        exclude_patterns = ['notificacion', 'twilio']  # Rutas a excluir
+        exclude_patterns = ['notificacion', 'twilio']
         broken_links = []
 
         for url_pattern in resolver.url_patterns:
