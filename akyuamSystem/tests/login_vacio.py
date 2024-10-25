@@ -14,9 +14,9 @@ try:
 
     time.sleep(2)  
     username_input = driver.find_element(By.NAME, "username") 
-    username_input.send_keys("administrador@gmail.com") 
+    username_input.send_keys("") 
     password_input = driver.find_element(By.NAME, "password") 
-    password_input.send_keys("Akyuamprueba") 
+    password_input.send_keys("") 
 
     login_button = driver.find_element(By.XPATH, "//button[@type='submit']")  
     login_button.click()
