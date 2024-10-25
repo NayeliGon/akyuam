@@ -3,7 +3,11 @@
 import os
 import sys
 
+from unittest.mock import MagicMock
 
+if 'test' in sys.argv:
+    sys.modules['twilio'] = MagicMock()
+    sys.modules['twilio'] = MagicMock()
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'akyuamSystem.settings')
