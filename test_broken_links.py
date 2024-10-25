@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.urls import reverse, get_resolver
 
 class BrokenLinksTest(TestCase):
-    @patch.dict('sys.modules', {'twilio': None})  # Mockea twilio como None
+    @patch.dict('sys.modules', {'twilio.rest': None})  # Mockea twilio.rest como None
     def test_urls(self):
         resolver = get_resolver()
         exclude_patterns = ['notificacion', 'twilio']
