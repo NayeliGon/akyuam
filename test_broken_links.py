@@ -3,9 +3,7 @@ from django.test import TestCase
 from django.urls import reverse, get_resolver
 
 class BrokenLinksTest(TestCase):
-    def setUp(self):
-        # Inicia sesión en caso de que algunas rutas necesiten autenticación
-        self.client.login(username='admin', password='admin')
+   
 
     def test_urls(self):
         resolver = get_resolver()  # Obtiene todas las rutas configuradas en tu proyecto
