@@ -4,8 +4,7 @@ from dotenv import load_dotenv
 import os
 import sys
 
-if 'test' not in sys.argv
-    from twilio.rest import Client
+if 'test' not in sys.argv:    from twilio.rest import Client
 else:
     print("Twilo import skipped during tests:v")
 # Intentar cargar las variables desde el archivo .env solo en desarrollo
