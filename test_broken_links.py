@@ -1,21 +1,20 @@
-from unittest.mock import patch
+import requests
 from django.test import TestCase
 from django.urls import reverse, get_resolver
 
 class BrokenLinksTest(TestCase):
-    @patch.dict('sys.modules', {'twilio.rest': None})  # Mockea twilio.rest como None
+   
+
     def test_urls(self):
-        resolver = get_resolver()
-        exclude_patterns = ['notificacion', 'twilio']
+        resolver = get_resolver()  # Obtiene todas las rutas configuradas en tu proyecto
         broken_links = []
 
+        # Recorre todas las rutas encontradas
         for url_pattern in resolver.url_patterns:
-            if any(exclude in url_pattern.pattern._route for exclude in exclude_patterns):
-                continue  # Omitir rutas relacionadas con Twilio
-
             try:
                 url = reverse(url_pattern.name)
                 response = self.client.get(url)
+                # Verifica si la respuesta es diferente a 200
                 if response.status_code != 200:
                     broken_links.append((url, response.status_code))
             except Exception as e:
