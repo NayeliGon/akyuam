@@ -21,10 +21,12 @@
         
         .navbar-custom {
             background-color: #741e78; 
+            padding:0; 
           
         }
         .navbar-custom .navbar-brand {
             color: white;
+            padding:0; 
         }
     </style>
 </head>
@@ -35,13 +37,14 @@
     <h2 class="mb-4">Participantes de AK'YU'AM</h2>
 
     <!--Cuadro de búsqueda por nombre-->
-    <input type="text" id="searchInput" placeholder="Buscar por nombre o apellido" class="form-control mb-3">
+    <input type="text" id="searchInput" placeholder="Buscar por número de expediente, nombre o apellido" class="form-control mb-3">
 
     <table class="table">
         <thead>
           <tr>
             
             <th scope="col">Código</th>
+            <th scope="col">No. Expediente</th>
             <th scope="col">Nombre</th>
             <th scope="col">Apellido</th>
             <th scope="col">Dirección</th>
@@ -58,6 +61,7 @@
             {% for participante in participantes %}
             <tr>
             <td>{{ participante.id }}</td>
+            <td>{{ participante.no_expediente }}</td>
             <td>{{ participante.nombre }}</td>
             <td>{{ participante.apellido }}</td>
             <td>{{ participante.direccion }}</td>
@@ -95,11 +99,12 @@
         const rows = document.querySelectorAll('tbody tr');
 
         rows.forEach(row => {
-            const nombre = row.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Columna del nombre
-            const apellido = row.querySelector('td:nth-child(3)').textContent.toLowerCase(); // Columna del apellido
+            const expediente = row.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Columna del no.expediente
+            const nombre = row.querySelector('td:nth-child(3)').textContent.toLowerCase(); // Columna del nombre
+            const apellido = row.querySelector('td:nth-child(4)').textContent.toLowerCase(); // Columna del nombre
 
             // Verifica si el valor de búsqueda está en el nombre o en el apellido
-            if (nombre.includes(searchValue) || apellido.includes(searchValue)) {
+            if (nombre.includes(searchValue) || apellido.includes(searchValue) ||expediente.includes(searchValue)) {
                 row.style.display = ''; // Muestra la fila
             } else {
                 row.style.display = 'none'; // Oculta la fila

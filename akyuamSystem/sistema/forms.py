@@ -189,6 +189,14 @@ class HijoExtraForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(HijoExtraForm, self).__init__(*args, **kwargs)
+
+        checkbox_fields = [
+            'es_reconocido', 'es_estudiante'
+        ]
+
+        for field in checkbox_fields:
+            self.fields[field].help_text = 'Marque si la respuesta es "Sí".'
+
         self.fields['establecimiento'].required = False
 
 
@@ -198,7 +206,7 @@ class ParticipanteForm(forms.ModelForm):
     class Meta:
         model = Participante
         fields = [
-            'referente', 'hora_ingreso', 'nombre', 'apellido', 'telefono', 'dpi',
+            'no_expediente','lugar_ingreso','fecha_ingreso','estado_ingreso','referente', 'hora_ingreso', 'nombre', 'apellido', 'telefono', 'dpi',
             'fecha_nacimiento', 'direccion', 'lectura_escritura', 'profesion',
             'ocupacion', 'direccion_trabajo', 'telefono_trabajo', 'antecedentes_enfermedad',
             'enfermedad', 'presenta_discapacidad', 'discapacidad', 'estado_gestacion',
@@ -209,13 +217,17 @@ class ParticipanteForm(forms.ModelForm):
     
 
         widgets = {
+            'no_expediente': forms.TextInput(attrs={'class': 'form-control'}),
+            'lugar_ingreso': forms.TextInput(attrs={'class': 'form-control'}),
+            'estado_ingreso': forms.Select(attrs={'class': 'form-select'}),
+            'fecha_ingreso': forms.DateInput(attrs={'class': 'form-control','type': 'date'}),
             'referente': forms.TextInput(attrs={'class': 'form-control'}),
             'hora_ingreso': forms.TimeInput(attrs={'class': 'form-control','type': 'time'}),
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'apellido': forms.TextInput(attrs={'class': 'form-control'}),
             'telefono': forms.TextInput(attrs={'class': 'form-control'}),
             'dpi': forms.TextInput(attrs={'class': 'form-control'}),
-            'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control datepicker'}),
+            'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control','type': 'date'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control'}),
             'lectura_escritura': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'profesion': forms.TextInput(attrs={'class': 'form-control'}),
