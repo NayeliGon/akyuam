@@ -37,6 +37,11 @@
     .text-muted {
         font-size: 0.9rem;
     }
+
+    #instruccion{
+    color: gray;
+    font-size: 0.8rem;
+}
 </style>
 
 <!-- Formulario -->
@@ -47,7 +52,8 @@
         
         <div class="mb-3">
             <label for="contraseña_nueva" class="form-label">Nueva Contraseña</label>
-            <input type="password" class="form-control" id="contraseña_nueva" name="contraseña_nueva" required placeholder="Introduce tu nueva contraseña">
+            <input type="password" minlength="8" pattern=".*[A-Z].*.*[a-z].*" class="form-control" id="contraseña_nueva" name="contraseña_nueva" required placeholder="Introduce tu nueva contraseña">
+            <p id="instruccion">La contraseña debe llevar almenos una mayúscula, al menos una minúscula y al menos 8 caracteres</p>
         </div>
         
         <div class="mb-3">

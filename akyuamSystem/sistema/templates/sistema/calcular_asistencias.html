@@ -69,6 +69,7 @@
             <thead>
                 <tr>
                     <th scope="col">Código</th>
+                    <th scope="col">No.Expediente</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
                     <th scope="col">Dirección</th>
@@ -82,6 +83,7 @@
                     {% for participante in participantes %}
                     <tr>
                         <td>{{ participante.id }}</td>
+                        <td>{{ participante.no_expediente }}</td>
                         <td>{{ participante.nombre }}</td>
                         <td>{{ participante.apellido }}</td>
                         <td>{{ participante.direccion }}</td>

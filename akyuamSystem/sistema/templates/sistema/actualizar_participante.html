@@ -20,6 +20,44 @@
         <form method="POST">
             {% csrf_token %}
             
+
+            <div class="col-md-4">
+                <label for="referente" class="form-label">No. Expediente</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    {{ form.no_expediente }}
+                </div>
+            </div>
+
+            <div class="row">
+            <div class="col-md-4">
+                <label for="referente" class="form-label">Lugar</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    {{ form.lugar_ingreso }}
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="referente" class="form-label">Fecha de ingreso</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    {{ form.fecha_ingreso }}
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <label for="referente" class="form-label">Tipo de ingreso</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    {{ form.estado_ingreso }}
+                </div>
+            </div>
+            </div>
+
+
+
             <!-- Fila 1 -->
             <div class="row">
                 <div class="col-md-4">
@@ -78,7 +116,7 @@
                     <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
                     <div class="input-group date">
                         <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                        <div class="form-control datepicker">
+                        <div class="form-control">
                         {{ form.fecha_nacimiento }}
                         
                         </div>

@@ -63,6 +63,42 @@
             <form method="POST">
                 {% csrf_token %}
                 
+
+                <div class="col-md-4">
+                    <label for="referente" class="form-label">No. Expediente</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        {{ form.no_expediente }}
+                    </div>
+                </div>
+
+                <div class="row">
+                <div class="col-md-4">
+                    <label for="referente" class="form-label">Lugar</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        {{ form.lugar_ingreso }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="referente" class="form-label">Fecha de ingreso</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        {{ form.fecha_ingreso }}
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <label for="referente" class="form-label">Tipo de ingreso</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        {{ form.estado_ingreso }}
+                    </div>
+                </div>
+                </div>
+
                 <!-- Fila 1 -->
                 <div class="row">
                     <div class="col-md-4">
@@ -302,7 +338,7 @@
                
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="idioma" class="form-label">Idioma/lengua que habla</label>
+                        <label for="idioma" class="form-label">Idioma</label>
                         {{ form.idioma }}
                     </div>
                 </div>
@@ -319,7 +355,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     
-    
+    <!--
     <script>
 
         $(document).ready(function() {
@@ -329,7 +365,7 @@
                 todayHighlight: true
             });
         });
-    </script>
+    </script>-->
 
     <script>
     const timepicker1 = new tempusDominus.TempusDominus(document.getElementById('timepicker1'), {

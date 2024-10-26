@@ -107,6 +107,15 @@ class TipoViolencia(models.Model):
 
     def __str__(self):
         return self.tipo_violencia
+    
+
+class EstadoIngreso(models.Model):
+    estado_ingreso = models.CharField(max_length=100, null=True, blank=True)
+
+
+    def __str__(self):
+        return self.estado_ingreso  
+
 
 class Participante(models.Model):
     id = models.AutoField(primary_key=True)
@@ -142,6 +151,13 @@ class Participante(models.Model):
     municipio_direccion = models.ForeignKey(Municipio, related_name='direccion', on_delete=models.CASCADE)
     idioma = models.ForeignKey(Idioma, on_delete=models.CASCADE)
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE) 
+
+    #campos extra
+
+    fecha_ingreso = models.DateField(null=True, blank=True)  # Opcional
+    lugar_ingreso= models.CharField(max_length=200, null=True, blank=True)
+    estado_ingreso= models.ForeignKey(EstadoIngreso, on_delete=models.CASCADE,null=True, blank=True)
+
 
     def __str__(self):
         return f"{self.nombre} {self.apellido} {self.no_expediente}"
