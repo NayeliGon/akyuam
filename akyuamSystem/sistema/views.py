@@ -680,7 +680,7 @@ def envio_boton_view(request):
 @login_required
 def listar_participantes_view(request):
     if request.method == 'GET':
-        participantes = Participante.objects.values('id', 'nombre', 'apellido', 'direccion', 'dpi', 'telefono').order_by('id')  # Solo los campos necesarios
+        participantes = Participante.objects.values('id', 'no_expediente','nombre', 'apellido', 'direccion', 'dpi', 'telefono').order_by('id')  # Solo los campos necesarios
         return render(request, 'sistema/lista_participantes.html', {'participantes': participantes})
 
 
