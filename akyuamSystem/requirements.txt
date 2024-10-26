@@ -1,0 +1,5 @@
+Django==5.1.1
+psycopg2==2.9.9
+twilio==9.3.3
+xhtml2pdf==0.2.16
+python-dotenv==1.0.1
