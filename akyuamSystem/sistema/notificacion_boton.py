@@ -17,7 +17,7 @@ def enviar_mensaje(nombre,apellido,direccion, telefono):
     client = Client(account_sid, auth_token)
 
     message = client.messages.create(
-        body=f"{nombre} {apellido} está sufriendo violencia intrafamiliar, su dirección es {direccion}, y su número de telefono es {telefono}",
+        body=f"{nombre} {apellido} necesita ayuda, se encuentra en riesgo, su dirección es {direccion}, y su número de telefono es {telefono}",
         from_="+15306658627",
         to="+50257801201",
     )
