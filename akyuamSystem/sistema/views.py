@@ -446,7 +446,7 @@ def consulta_asistencia_view(request):
         # Si se realiza una búsqueda, filtra los participantes
         participantes = Participante.objects.filter(
             nombre__icontains=search
-        ) | Participante.objects.filter(apellido__icontains=search)
+        ) | Participante.objects.filter(apellido__icontains=search) | Participante.objects.filter(no_expediente__icontains=search)
 
     # Preparar el contexto para renderizar la vista
     context = {'participantes': participantes}
@@ -644,17 +644,26 @@ def logout_view(request):
 
 
 def envio_boton_view(request):
+    
+    
     if request.method == 'POST':
 
         #obtener codigo
         data = json.loads(request.body)
         codigo= data.get('codigo')
 
+        if not codigo:
+            return HttpResponse('El código es obligatorio.')
+
         #consultar existencia de código en la base de datos
 
         try:
 
-            participante = Participante.objects.get(id=codigo)
+            participante = Participante.objects.filter(no_expediente=codigo).first()
+
+            if not participante:
+                return HttpResponse('El código no es válido')
+        
             nombre = participante.nombre
             apellido= participante.apellido
             direccion = participante.direccion
@@ -680,7 +689,7 @@ def envio_boton_view(request):
 @login_required
 def listar_participantes_view(request):
     if request.method == 'GET':
-        participantes = Participante.objects.values('id', 'nombre', 'apellido', 'direccion', 'dpi', 'telefono').order_by('id')  # Solo los campos necesarios
+        participantes = Participante.objects.values('id', 'no_expediente','nombre', 'apellido','direccion', 'dpi', 'telefono').order_by('id')  # Solo los campos necesarios
         return render(request, 'sistema/lista_participantes.html', {'participantes': participantes})
 
 
@@ -905,8 +914,8 @@ def buscar_participantes(request):
         ).annotate(
             cantidad_hijos=Count('hijo'),
             hijos_albergue=Subquery(ultimo_albergue.values('cantidad_hijos')[:1]),
-            fecha_ingreso=Subquery(ultimo_albergue.values('fecha_ingreso')[:1]),
-            fecha_salida=Subquery(ultimo_albergue.values('fecha_salida')[:1])
+            ultimo_fecha_ingreso=Subquery(ultimo_albergue.values('fecha_ingreso')[:1]),
+            ultimo_fecha_salida=Subquery(ultimo_albergue.values('fecha_salida')[:1])
         )
     else:
         participantes = None

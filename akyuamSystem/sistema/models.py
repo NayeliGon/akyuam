@@ -113,7 +113,7 @@ class EstadoIngreso(models.Model):
     estado_ingreso = models.CharField(max_length=100, null=True, blank=True)
 
 
-    def _str_(self):
+    def __str__(self):
         return self.estado_ingreso  
 
 
@@ -155,7 +155,7 @@ class Participante(models.Model):
     #campos extra
 
     fecha_ingreso = models.DateField(null=True, blank=True)  # Opcional
-    lugar_ingreso= models.CharField(max_length=15, null=True, blank=True)
+    lugar_ingreso= models.CharField(max_length=200, null=True, blank=True)
     estado_ingreso= models.ForeignKey(EstadoIngreso, on_delete=models.CASCADE,null=True, blank=True)
 
 
