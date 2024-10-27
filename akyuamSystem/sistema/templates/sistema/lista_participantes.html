@@ -34,7 +34,11 @@
 
    
 
-    <h2 class="mb-4">Participantes de AK'YU'AM</h2>
+    <h2 class="mb-4">Usuarias registradas</h2>
+    
+    <a href="{% url 'registrar_participante' %}" class="btn btn-success">Regresar</a>
+
+<br><br>
 
     <!--Cuadro de búsqueda por nombre-->
     <input type="text" id="searchInput" placeholder="Buscar por número de expediente, nombre o apellido" class="form-control mb-3">
@@ -76,6 +80,7 @@
                 <a href="{% url 'lista_agresores' participante.id %}" class="btn btn-danger"><i class="fas fa-user-slash"></i></a>
                 <a href="{% url 'participante_pdf' participante.id %}" class="btn btn-danger"><i class="fas fa-print"></i></a>
                 
+                
               </td>
             </tr>
             {% endfor %}
@@ -83,9 +88,6 @@
         </tbody>
       </table>
 
-
-
-      <a href="{% url 'registrar_participante' %}" class="btn btn-success">Regresar</a>
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

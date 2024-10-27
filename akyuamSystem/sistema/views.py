@@ -422,7 +422,7 @@ def sesiones_view(request):
     grupos_permitidos = ['Administrador', 'Encargado']
     if request.user.groups.filter(name__in=grupos_permitidos).exists():
         if request.method == 'GET':
-            participantes = Participante.objects.values('id', 'nombre', 'apellido', 'direccion', 'dpi', 'telefono').order_by('id')
+            participantes = Participante.objects.values('id', 'no_expediente','nombre', 'apellido', 'direccion', 'dpi', 'telefono').order_by('id')
             return render(request, 'sistema/sesiones_participantes.html',{'participantes':participantes})
     else:
         return render(request, 'sistema/acceso_denegado.html', status=403)

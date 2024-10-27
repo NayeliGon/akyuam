@@ -46,6 +46,39 @@
         background-color: #e9ecef;
         border: 1px solid #ced4da;
     }
+    .footer a {
+            text-decoration: none;
+            color: #00796b;
+            font-weight: 500;
+        }
+
+        .footer img {
+            width: 50px;
+            margin-top: 10px;
+        }
+        .sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Espacio entre los enlaces y los elementos de abajo */
+    height: 100vh; /* Ajusta la altura al tamaño de la ventana */
+    padding: 20px; /* Opcional: espacio interior en la sidebar */
+}
+
+.sidebar a {
+    margin-bottom: 10px; /* Espacio entre enlaces */
+}
+
+.sidebar img {
+    width: 60%; /* Ajusta el tamaño relativo al ancho del contenedor */
+    max-width: 100px; /* Establece un tamaño máximo */
+    height: auto; /* Mantiene la proporción de la imagen */
+    margin: 0 auto 10px; /* Centra la imagen y agrega margen inferior */
+}
+
+.sidebar p {
+    margin: 0; /* Elimina márgenes extra */
+}
+
 </style>
 
 <body>
@@ -55,6 +88,9 @@
         <a href="{% url 'registrar_hijo_extra' %}"><i class="fas fa-users"></i>Registrar hijos</a>
         <a href="{% url 'registrar_familiar_extra' %}"><i class="fas fa-users"></i>Registrar familiares</a>
         <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Salir</a>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg/800px-Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg.png" alt="UMG">
+      
     </div>
 
     <div class="content">
