@@ -16,58 +16,117 @@
         body,html{
             width: 100%;
             height: 100%;
-            padding: 1rem;
+            padding: 0rem;
         }
+
+        .btn-custom {
+            background-color: #5a4d82;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #7b477e;
+            color: white;
+        }
+        .navbar-custom {
+            background-color: #741e78;
+        }
+        .navbar-custom .navbar-brand {
+            color: white;
+        }
+
+        .contenido {
+    margin: 20px; /* Margen alrededor del contenido */
+    padding: 10px; /* Opcional: espacio interior */
+    background-color: #f9f9f9; /* Opcional: fondo suave para resaltar el área */
+    border-radius: 8px; /* Bordes redondeados */
+}
+
     </style>
 </head>
+
 <body>
-    <h2 class="mb-4">Sesiones de Participantes de AK'YU'AM</h2>
+
+
+    <nav class="navbar navbar-custom mb-4">
+        <a href="{% url 'home' %}" class="navbar-brand">
+        <span></spna>    <i class="fas fa-home"></i> Inicio
+        </a>
+    </nav>
+
+
+    <div class="contenido">
+        <h2 class="mb-4">Sesiones de Participantes de AK' YU'AM</h2>
     
+        <!-- Cuadro de búsqueda por nombre -->
+        <input type="text" id="searchInput" placeholder="Buscar por número de expediente, nombre o apellido" class="form-control mb-3">
+    
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">No. Expediente</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">DPI</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+    
+            <tbody class="table-group-divider">
+                {% for participante in participantes %}
+                <tr>
+                    <td>{{ participante.id }}</td>
+                    <td>{{ participante.no_expediente }}</td>
+                    <td>{{ participante.nombre }}</td>
+                    <td>{{ participante.apellido }}</td>
+                    <td>{{ participante.direccion }}</td>
+                    <td>{{ participante.dpi }}</td>
+                    <td>{{ participante.telefono }}</td>
+                    <td>
+                        <!-- Botón de Actualizar -->
+                        <a href="{% url 'registrar_sesion' participante.id %}" class="btn btn-success"><i class="fas fa-plus"></i></a>
+                        <a href="{% url 'lista_sesiones' participante.id %}" class="btn btn-secondary"><i class="fas fa-file-alt"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <style>
 
-    <!--Cuadro de búsqueda por nombre-->
-    <input type="text" id="searchInput" placeholder="Buscar por nombre o apellido" class="form-control mb-3">
-
-    <table class="table">
-        <thead>
-          <tr>
-            
-            <th scope="col">Código</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Dirección</th>
-            <th scope="col">DPI</th>
-            <th scope="col">Teléfono</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-
-
-        <tbody class="table-group-divider">
-
-
-            {% for participante in participantes %}
-            <tr>
-            <td>{{ participante.id }}</td>
-            <td>{{ participante.nombre }}</td>
-            <td>{{ participante.apellido }}</td>
-            <td>{{ participante.direccion }}</td>
-            <td>{{ participante.dpi }}</td>
-            <td>{{ participante.telefono }}</td>
-            <td>
-                <!-- Botón de Actualizar -->
-                <a href="{% url 'registrar_sesion' participante.id %}" class="btn btn-success"><i class="fas fa-plus"></i></a>               
-                <a href="{% url 'lista_sesiones' participante.id %}" class="btn btn-secondary"><i class="fas fa-file-alt"></i></a>
+        .footer {
+                    margin-top: 20px;
+                    text-align: center;
+                    font-size: 14px;
+                    color: #777;
+                }
+        
+                .footer a {
+                    text-decoration: none;
+                    color: #00796b;
+                    font-weight: 500;
+                }
+        
+                .footer img {
+                    width: 50px;
+                    margin-top: 10px;
+                }
+            </style>
+        
+            <div class="footer">
                 
-              </td>
-            </tr>
-            {% endfor %}
-                  
-        </tbody>
-      </table>
+                <a target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg/800px-Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg.png" alt="UMG">
+                </a>
+                <p>UNIVERSIDAD MARIANO GÁLVEZ<br>COBÁN ALTA VERAPAZ</br>FACULTAD DE INGENIERIA EN SISTEMAS PLAN DIARIO</p>
+                
+            </div>
 
 
-
-      <a href="{% url 'home' %}" class="btn btn-success">Regresar</a>
+      
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -81,8 +140,9 @@
         const rows = document.querySelectorAll('tbody tr');
 
         rows.forEach(row => {
-            const nombre = row.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Columna del nombre
-            const apellido = row.querySelector('td:nth-child(3)').textContent.toLowerCase(); // Columna del apellido
+            const no_expediente = row.querySelector('td:nth-child(2)').textContent.toLowerCase(); // Columna del apellido
+            const nombre = row.querySelector('td:nth-child(3)').textContent.toLowerCase(); // Columna del nombre
+            const apellido = row.querySelector('td:nth-child(4)').textContent.toLowerCase(); // Columna del apellido
 
             // Verifica si el valor de búsqueda está en el nombre o en el apellido
             if (nombre.includes(searchValue) || apellido.includes(searchValue)) {
