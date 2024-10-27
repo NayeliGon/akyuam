@@ -59,7 +59,7 @@
     <!-- Formulario de búsqueda -->
     <form method="GET" action="{% url 'buscar_participantes' %}" class="mb-4">
         <div class="input-group">
-            <input type="text" name="query" class="form-control" placeholder="Buscar por nombre, apellido o número de expediente" aria-label="Buscar">
+            <input type="text" name="query" class="form-control" placeholder="Buscar por número de expediente, nombre o apellido" aria-label="Buscar">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-search"></i> Buscar
@@ -181,6 +181,35 @@
     {% endif %}
 </div>
 
+<style>
+
+    .footer {
+                margin-top: 20px;
+                text-align: center;
+                font-size: 14px;
+                color: #777;
+            }
+    
+            .footer a {
+                text-decoration: none;
+                color: #00796b;
+                font-weight: 500;
+            }
+    
+            .footer img {
+                width: 50px;
+                margin-top: 10px;
+            }
+        </style>
+    
+        <div class="footer">
+            
+            <a target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg/800px-Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg.png" alt="UMG">
+            </a>
+            <p>UNIVERSIDAD MARIANO GÁLVEZ<br>COBÁN ALTA VERAPAZ</br>FACULTAD DE INGENIERIA EN SISTEMAS PLAN DIARIO</p>
+            
+        </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
