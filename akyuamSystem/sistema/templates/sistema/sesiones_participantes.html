@@ -145,7 +145,7 @@
             const apellido = row.querySelector('td:nth-child(4)').textContent.toLowerCase(); // Columna del apellido
 
             // Verifica si el valor de búsqueda está en el nombre o en el apellido
-            if (nombre.includes(searchValue) || apellido.includes(searchValue)) {
+            if (nombre.includes(searchValue) || apellido.includes(searchValue) || no_expediente.includes(searchValue)) {
                 row.style.display = ''; // Muestra la fila
             } else {
                 row.style.display = 'none'; // Oculta la fila

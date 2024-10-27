@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'akyuam_db',  
         'USER': 'akyuam',           
         'PASSWORD': 'klud34fgrt', 
-        'HOST': 'db',         
+        'HOST': 'localhost',         
         'PORT': '5432',           
     }
 }
