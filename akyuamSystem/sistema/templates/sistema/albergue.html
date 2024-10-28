@@ -54,7 +54,7 @@
 
 
 <div class="container">
-    <h1 class="mb-4">Búsqueda de Participantes</h1>
+    <h1 class="mb-4">Búsqueda de Participantes para Asignar al Albergue</h1>
 
     <!-- Formulario de búsqueda -->
     <form method="GET" action="{% url 'buscar_participantes' %}" class="mb-4">
@@ -95,10 +95,10 @@
                     {{ participante.hijos_albergue}}
                 </td>
                 <td>
-                    {{ participante.fecha_ingreso|date:"d/m/Y" }}
+                    {{ participante.ultimo_fecha_ingreso|date:"d/m/Y" }}
                 </td>
                 <td>
-                    {{ participante.fecha_salida|date:"d/m/Y" }}
+                    {{ participante.ultimo_fecha_salida|date:"d/m/Y" }}
                 </td>
                 
 

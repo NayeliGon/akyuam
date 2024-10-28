@@ -183,9 +183,9 @@
     
     <!--<p>No hay información de hijos</p>-->
     
-
-
-    <h2 class="titulo">Referencias Familiares o Personales</h2>
+    <br>
+    <br>
+    <h2 class="titulo">REFERENCIAS FAMILIARES O PERSONALES</h2>
     
     <p><strong>¿Recibe Apoyo Familiar?</strong> {{ participante.apoyo_familiar|yesno:"Sí,No" }}</p>
     
@@ -206,30 +206,37 @@
         {% endfor %}
     </table>
     
-    
-    <h2 class="titulo">Hechos Reportados</h2>
+    <br>
+    <br>
+    <h2 class="titulo">DESCRIPCIÓN DEL HECHO</h2>
    
     <table>
         <tr>
             <th>Fecha</th>
+            <th>Hora</th>
+            <th>Lugar</th>
             <th>Tipo de Violencia</th>
             <th>Descripción</th>
         </tr>
         {% for hecho in hechos %}
         <tr>
             <td>{{ hecho.fecha }}</td>
+            <td>{{ hecho.hora }}</td>
+            <td>{{ hecho.municipio_acontecimiento }}</td>
             <td>{{ hecho.tipo_violencia }}</td>
             <td>{{ hecho.descripcion_hecho }}</td>
         </tr>
-        {% endfor %}
-        <p>Alguna Vez ha denunciado: {{ hecho.denucnias }}</p>
-        <p>Fecha Denucnia: {{ hecho.fecha_denuncia}}</p>
-        <p>Institución y lugar:  {{ hecho.institucion_denuncia }}</p>
         
+        <p>¿Hace cuánto tiempo está sufriendo violencia?: {{ hecho.tiempo_violencia}}</p>
+        <p>¿Ha realizado una denuncia?: {{ hecho.denuncias|yesno:"Sí,No" }}</p>
+        <p>Fecha Denuncia: {{ hecho.fecha_denuncia}}</p>
+        <p>Institución y lugar:  {{ hecho.institucion_denuncia }}</p>
+        {% endfor %}
     </table>
     
-    
-    <h2 class="titulo">Información del Agresor</h2>
+    <br>
+    <br>
+    <h2 class="titulo">DATOS DEL AGRESOR</h2>
     {% if agresor %}
     <table>
         <tr>
