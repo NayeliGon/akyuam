@@ -903,7 +903,8 @@ def actualizar_sesion_view(request, sesion_id):
 def buscar_participantes(request):
     query = request.GET.get('query', '').strip()
 
-    fecha_ingreso_albergue = Albergue.objects.filter(participante=OuterRef('pk')).order_by('fecha_ingreso_albergue')
+    # Obtener el último albergue de cada participante
+    ultimo_albergue = Albergue.objects.filter(participante=OuterRef('pk')).order_by('-fecha_ingreso')
 
     if query:
         participantes = Participante.objects.filter(
@@ -912,35 +913,32 @@ def buscar_participantes(request):
             Q(no_expediente__icontains=query)
         ).annotate(
             cantidad_hijos=Count('hijo'),
-            hijos_albergue=Subquery(fecha_ingreso_albergue.values('cantidad_hijos')[:1]),
-            fecha_ingreso_albergue=Subquery(fecha_ingreso_albergue.values('fecha_ingreso_albergue')[:1]),
-            ultimo_fecha_salida=Subquery(fecha_ingreso_albergue.values('fecha_salida')[:1])
+            hijos_albergue=Subquery(ultimo_albergue.values('cantidad_hijos')[:1]),
+            ultimo_fecha_ingreso=Subquery(ultimo_albergue.values('fecha_ingreso')[:1]),
+            ultimo_fecha_salida=Subquery(ultimo_albergue.values('fecha_salida')[:1])
         )
     else:
         participantes = None
 
     return render(request, 'sistema/albergue.html', {'participantes': participantes})
-
 @login_required
 def ingresar_participante(request, participante_id):
     participante = get_object_or_404(Participante, id=participante_id)
 
     if request.method == 'POST':
-        fecha_ingreso_albergue = request.POST.get('fecha_ingreso_albergue')
+        fecha_ingreso = request.POST.get('fecha_ingreso')
         cantidad_hijos = request.POST.get('cantidad_hijos')
 
         nuevo_registro = Albergue(
             participante=participante,
-            fecha_ingreso_albergue=fecha_ingreso_albergue,
+            fecha_ingreso=fecha_ingreso,
             cantidad_hijos=cantidad_hijos
         )
         nuevo_registro.save()
 
         return redirect('buscar_participantes') 
-    
     return render(request, 'sistema/albergue.html', {'participante': participante})
 @login_required
-
 def registrar_salida(request, id_participante):
 
     participante = get_object_or_404(Participante, id=id_participante)
