@@ -95,7 +95,7 @@
                     {{ participante.hijos_albergue}}
                 </td>
                 <td>
-                    {{ participante.fecha_ingreso|date:"d/m/Y" }}
+                    {{ participante.fecha_ingreso_albergue|date:"d/m/Y" }}
                 </td>
                 <td>
                     {{ participante.fecha_salida|date:"d/m/Y" }}
@@ -121,8 +121,8 @@
                                     {% csrf_token %}
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <label for="fecha_ingreso">Fecha de Ingreso</label>
-                                            <input type="date" class="form-control" id="fecha_ingreso" name="fecha_ingreso" required>
+                                            <label for="fecha_ingreso_albergue">Fecha de Ingreso</label>
+                                            <input type="date" class="form-control" id="fecha_ingreso_albergue" name="fecha_ingreso_albergue" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="cantidad_hijos">Cantidad de Hijos</label>

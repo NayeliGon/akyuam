@@ -267,6 +267,6 @@ class Sesion(models.Model):
 
 class Albergue(models.Model):
     participante = models.ForeignKey(Participante, on_delete=models.CASCADE)
-    fecha_ingreso = models.DateTimeField(default=timezone.now)
+    fecha_ingreso_albergue = models.DateTimeField(default=timezone.now)
     fecha_salida = models.DateTimeField(null=True, blank=True)
     cantidad_hijos = models.IntegerField()
